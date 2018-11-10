@@ -1,5 +1,6 @@
 package com.xhj.kotlin.base.data.net
 
+import android.util.Log
 import com.xhj.kotlin.base.common.BaseConstant
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -49,7 +50,6 @@ class RetrofitFactory private constructor() {
 
     private fun initLogInterceptor(): Interceptor {
         var interceptor = HttpLoggingInterceptor()
-
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         return interceptor
     }

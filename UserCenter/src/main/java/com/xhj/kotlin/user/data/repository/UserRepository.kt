@@ -1,5 +1,6 @@
 package com.xhj.kotlin.user.data.repository
 
+import android.util.Log
 import com.xhj.kotlin.base.data.net.RetrofitFactory
 import com.xhj.kotlin.base.data.protocol.BaseResp
 import com.xhj.kotlin.user.data.api.UserApi
