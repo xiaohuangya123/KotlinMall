@@ -8,11 +8,14 @@ import com.xhj.kotlin.user.service.UserService
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Function
+import javax.inject.Inject
 
-class UserServiceImpl:UserService{
+class UserServiceImpl @Inject constructor() :UserService{
+
+    @Inject
+    lateinit var repository : UserRepository
+
     override fun register(mobile: String, pwd: String, verifyCode: String): Observable<Boolean> {
-        val repository = UserRepository()
-
         return repository.register(mobile, pwd, verifyCode)
             .flatMap(object : Function<BaseResp<String>, ObservableSource<Boolean>> {
                 override fun apply(t: BaseResp<String>): ObservableSource<Boolean> {
