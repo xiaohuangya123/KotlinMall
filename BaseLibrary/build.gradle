@@ -12,7 +12,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -25,10 +25,10 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // Anko Commons
@@ -52,7 +52,9 @@ dependencies {
     //dagger2
     api "com.google.dagger:dagger-android:$dagger2_version"
     kapt "com.google.dagger:dagger-compiler:$dagger2_version"
-
+    //RxLifeCircle
+    implementation "com.trello.rxlifecycle3:rxlifecycle-kotlin:$rx_lificircle_version"
+    implementation "com.trello.rxlifecycle3:rxlifecycle-components:$rx_lificircle_version"
 }
 repositories {
     mavenCentral()
