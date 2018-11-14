@@ -38,6 +38,8 @@ dependencies {
     // Support-v4 (only Anko Commons)
     api "org.jetbrains.anko:anko-support-v4-commons:$anko_version"
 
+    //logger
+    api 'com.orhanobut:logger:2.2.0'
     //Rx
     api "io.reactivex.rxjava2:rxkotlin:$rx_kotlin_version"
     api "io.reactivex.rxjava2:rxandroid:$rx_android_version"
@@ -53,8 +55,8 @@ dependencies {
     api "com.google.dagger:dagger-android:$dagger2_version"
     kapt "com.google.dagger:dagger-compiler:$dagger2_version"
     //RxLifeCircle
-    implementation "com.trello.rxlifecycle3:rxlifecycle-kotlin:$rx_lificircle_version"
-    implementation "com.trello.rxlifecycle3:rxlifecycle-components:$rx_lificircle_version"
+    api "com.trello.rxlifecycle3:rxlifecycle-kotlin:$rx_lificircle_version"
+    api "com.trello.rxlifecycle3:rxlifecycle-components:$rx_lificircle_version"
 }
 repositories {
     mavenCentral()
