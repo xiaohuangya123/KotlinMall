@@ -1,5 +1,6 @@
-package com.xhj.kotlin.base.ui.activity
+package com.xhj.kotlin.base.ui.fragment
 
+import android.app.Activity
 import android.os.Bundle
 import com.orhanobut.logger.Logger
 import com.xhj.kotlin.base.common.BaseApplication
@@ -11,7 +12,7 @@ import com.xhj.kotlin.base.presenter.BasePresenter
 import com.xhj.kotlin.base.presenter.view.BaseView
 import javax.inject.Inject
 
-open abstract class BaseMvpActivity<T : BasePresenter<*>> : BaseActivity(), BaseView {
+open abstract class BaseMvpFragment<T : BasePresenter<*>> : BaseFragment(), BaseView {
 
     lateinit var activityComponent: ActivityComponent
 
@@ -39,8 +40,8 @@ open abstract class BaseMvpActivity<T : BasePresenter<*>> : BaseActivity(), Base
 
     private fun ininActivityComponent() {
         activityComponent = DaggerActivityComponent.builder()
-            .appComponent((application as BaseApplication).appComponent)
-            .activityModule(ActivityModule(this))
+            .appComponent((activity?.application as BaseApplication).appComponent)
+            .activityModule(ActivityModule(activity as Activity))
             .lifecycleProviderModule(LifecycleProviderModule(this))
             .build()
 

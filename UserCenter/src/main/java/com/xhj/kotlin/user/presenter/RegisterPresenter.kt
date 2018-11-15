@@ -20,10 +20,12 @@ class RegisterPresenter @Inject constructor(): BasePresenter<RegisterView>(){
         userService.register(mobile,pwd,verifyCode)
             .execute(object : BaseObserver<Boolean>(){
                 override fun onNext(t: Boolean) {
-                    mView.onRegisterResult(t)
+                    if(t){
+                        mView.onRegisterResult("注册成功")
+                    }
+
                 }
             },lifecycleProvider)
-        mView.onRegisterResult(true)
 
 //            .flatMap ({ resp -> Observable.just(resp.status == 0) })
 //            .subscribeOn(Schedulers.io())
