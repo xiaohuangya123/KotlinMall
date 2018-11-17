@@ -5,6 +5,7 @@ import com.orhanobut.logger.Logger
 import com.xhj.kotlin.base.common.AppManager
 import com.xhj.kotlin.base.ext.onClick
 import com.xhj.kotlin.base.ui.activity.BaseMvpActivity
+import com.xhj.kotlin.base.widgets.VerifyButton
 import com.xhj.kotlin.user.R
 import com.xhj.kotlin.user.injection.component.DaggerUserComponent
 import com.xhj.kotlin.user.injection.module.UserModule
@@ -29,7 +30,6 @@ class RegisterActivity : BaseMvpActivity<RegisterPresenter>(), RegisterView {
 
     override fun onRegisterResult(result: String) {
         toast(result)
-        Logger.d("hello")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +38,10 @@ class RegisterActivity : BaseMvpActivity<RegisterPresenter>(), RegisterView {
 
         mRegisterBtn.onClick{
             mPresenter.register(mMobileEt.text.toString(),mPwdEt.text.toString(),mVerifyCodeEt.text.toString())
+        }
+
+        mGetVerifyCodeBtn.onClick {
+            mGetVerifyCodeBtn.requestSendVerifyNumber()
         }
     }
 

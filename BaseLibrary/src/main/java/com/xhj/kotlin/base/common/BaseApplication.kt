@@ -1,6 +1,7 @@
 package com.xhj.kotlin.base.common
 
 import android.app.Application
+import android.content.Context
 import com.orhanobut.logger.*
 import com.xhj.kotlin.base.injection.component.AppComponent
 import com.xhj.kotlin.base.injection.component.DaggerAppComponent
@@ -15,9 +16,12 @@ class BaseApplication : Application() {
 
     lateinit var appComponent: AppComponent
 
+    companion object {
+        lateinit var context : Context
+    }
+
     override fun onCreate() {
         super.onCreate()
-
        //应用logger日志框架
         val formatStrategy = PrettyFormatStrategy.newBuilder()
             .tag("myTag")
@@ -25,6 +29,7 @@ class BaseApplication : Application() {
         Logger.addLogAdapter(AndroidLogAdapter(formatStrategy))
 
         ininAppInjection()
+        context = this
     }
 
     private fun ininAppInjection() {

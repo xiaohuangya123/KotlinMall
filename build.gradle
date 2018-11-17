@@ -15,6 +15,8 @@ buildscript {
 
     ext.rx_lificircle_version = '3.0.0'
 
+    ext.glide_version = '3.7.0'
+
     repositories {
         google()
         jcenter()

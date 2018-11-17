@@ -6,6 +6,7 @@ package com.xhj.kotlin.base.common
 class BaseConstant {
     companion object {
 //        val SERVER_ADDRESS = "http://gobagou.com:8088/"
-        val SERVER_ADDRESS = "http://192.168.0.103:8080/"
+        const val SERVER_ADDRESS = "http://192.168.0.103:8080/"
+        const val TABLE_PREFS = "Kotlin_mall"
     }
 }

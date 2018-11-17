@@ -2,6 +2,7 @@ package com.xhj.kotlin.base.ui.fragment
 
 import android.app.Activity
 import android.os.Bundle
+import android.widget.Toast
 import com.orhanobut.logger.Logger
 import com.xhj.kotlin.base.common.BaseApplication
 import com.xhj.kotlin.base.injection.component.ActivityComponent
@@ -11,6 +12,7 @@ import com.xhj.kotlin.base.injection.module.LifecycleProviderModule
 import com.xhj.kotlin.base.presenter.BasePresenter
 import com.xhj.kotlin.base.presenter.view.BaseView
 import javax.inject.Inject
+import org.jetbrains.anko.toast
 
 open abstract class BaseMvpFragment<T : BasePresenter<*>> : BaseFragment(), BaseView {
 
@@ -18,15 +20,6 @@ open abstract class BaseMvpFragment<T : BasePresenter<*>> : BaseFragment(), Base
 
     @Inject
     lateinit var mPresenter: T
-
-    override fun showLoading() {
-    }
-
-    override fun hideLoading() {
-    }
-
-    override fun onError() {
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +37,16 @@ open abstract class BaseMvpFragment<T : BasePresenter<*>> : BaseFragment(), Base
             .activityModule(ActivityModule(activity as Activity))
             .lifecycleProviderModule(LifecycleProviderModule(this))
             .build()
+    }
 
+    override fun showLoading() {
+    }
+
+    override fun hideLoading() {
+    }
+
+    override fun onError(text : String) {
+        Toast.makeText(activity,text,Toast.LENGTH_SHORT).show()
     }
 
 }
