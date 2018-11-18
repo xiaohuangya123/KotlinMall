@@ -1,5 +1,6 @@
 package com.xhj.kotlin.base.rx
 
+import com.xhj.kotlin.base.common.ResultCode
 import com.xhj.kotlin.base.data.protocol.BaseResp
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
@@ -10,7 +11,7 @@ import io.reactivex.functions.Function
  */
 class BaseFunction<T> : Function<BaseResp<T>, ObservableSource<T>>{
     override fun apply(t: BaseResp<T>): ObservableSource<T> {
-        if (t.status != 0) {
+        if (t.status != ResultCode.SUCCESS) {
             return Observable.error(BaseException(t.status, t.message))
         }
         return Observable.just(t.data)
