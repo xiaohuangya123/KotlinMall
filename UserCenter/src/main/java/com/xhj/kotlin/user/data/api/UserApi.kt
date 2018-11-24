@@ -1,9 +1,7 @@
 package com.xhj.kotlin.user.data.api
 
 import com.xhj.kotlin.base.data.protocol.BaseResp
-import com.xhj.kotlin.user.data.protocol.LoginReq
-import com.xhj.kotlin.user.data.protocol.RegisterReq
-import com.xhj.kotlin.user.data.protocol.UserInfo
+import com.xhj.kotlin.user.data.protocol.*
 import io.reactivex.Observable
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -17,4 +15,10 @@ interface UserApi {
 
     @POST("userCenter/login")
     fun login(@Body req: LoginReq):Observable<BaseResp<UserInfo>>
+
+    @POST("userCenter/forgetPwd")
+    fun forgetPwd(@Body req: ForgetPwdReq):Observable<BaseResp<String>>
+
+    @POST("userCenter/resetPwd")
+    fun resetPwd(@Body req: ResetPwdReq):Observable<BaseResp<String>>
 }
