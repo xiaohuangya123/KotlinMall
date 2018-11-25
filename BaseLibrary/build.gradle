@@ -64,6 +64,18 @@ dependencies {
     //RxLifeCircle
     api "com.trello.rxlifecycle3:rxlifecycle-kotlin:$rx_lificircle_version"
     api "com.trello.rxlifecycle3:rxlifecycle-components:$rx_lificircle_version"
+    //circleimageview
+    api "de.hdodenhof:circleimageview:$circle_imageView_version"
+    //takephoto
+    api "com.jph.takephoto:takephoto_library:$take_photo_version"
+    //alertview
+    api "com.bigkoo:alertview:$alert_view_version"
+    //rxpermissions
+    api "com.github.tbruyelle:rxpermissions:${rx_rxpermissions_version}"
+    //七牛云存储
+    api 'com.qiniu:qiniu-android-sdk:7.3.+'
+
+
 }
 repositories {
     mavenCentral()

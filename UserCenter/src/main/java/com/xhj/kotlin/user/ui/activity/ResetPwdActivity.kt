@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_reset_pwd.*
 import org.jetbrains.anko.*
 
 /**
- * 忘记密码界面
+ * 重置密码界面
  */
 class ResetPwdActivity : BaseMvpActivity<ResetPwdPresenter>(), ResetPwdView{
 
