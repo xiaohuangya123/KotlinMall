@@ -74,6 +74,8 @@ dependencies {
     api "com.github.tbruyelle:rxpermissions:${rx_rxpermissions_version}"
     //七牛云存储
     api 'com.qiniu:qiniu-android-sdk:7.3.+'
+    //底部导肮
+    api 'com.ashokvarma.android:bottom-navigation-bar:2.1.0'
 
 
 }
