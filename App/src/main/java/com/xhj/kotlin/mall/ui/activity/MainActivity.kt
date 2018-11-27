@@ -3,6 +3,7 @@ package com.xhj.kotlin.mall.ui.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.xhj.kotlin.mall.R
+import com.xhj.kotlin.mall.ui.fragment.HomeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import rx.Observable
 import rx.Observer
@@ -18,17 +19,12 @@ class MainActivity : AppCompatActivity() {
         mBottomNavBar.checkCartBadge(20)
         mBottomNavBar.checkMsgBadge(false)
 
-        Observable.timer(2, TimeUnit.SECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                mBottomNavBar.checkMsgBadge(true)
-            }
+        initView()
+    }
 
-        Observable.timer(5, TimeUnit.SECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                mBottomNavBar.checkCartBadge(0)
-            }
-
+    private fun initView() {
+        val manager = supportFragmentManager.beginTransaction()
+        manager.replace(R.id.mContaier, HomeFragment())
+        manager.commit()
     }
 }

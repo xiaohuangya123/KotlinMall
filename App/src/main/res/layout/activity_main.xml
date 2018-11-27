@@ -4,11 +4,15 @@
     style="@style/MatchMatch.Vertical"
     android:gravity="bottom">
 
+    <FrameLayout
+        android:id="@+id/mContaier"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
     <com.xhj.kotlin.base.widgets.BottomNavBar
         android:id="@+id/mBottomNavBar"
         android:layout_gravity="bottom"
         style="@style/MatchWrap"/>
-
-
 
 </LinearLayout>

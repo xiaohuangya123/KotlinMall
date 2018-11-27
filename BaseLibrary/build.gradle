@@ -76,6 +76,8 @@ dependencies {
     api 'com.qiniu:qiniu-android-sdk:7.3.+'
     //底部导肮
     api 'com.ashokvarma.android:bottom-navigation-bar:2.1.0'
+    //Banner
+    api 'com.youth.banner:banner:1.4.10'
 
 
 }
