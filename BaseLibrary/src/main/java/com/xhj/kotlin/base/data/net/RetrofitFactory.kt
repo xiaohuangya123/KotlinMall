@@ -1,7 +1,6 @@
 package com.xhj.kotlin.base.data.net
 
-import android.util.Log
-import com.kotlin.base.utils.AppPrefsUtils
+import com.xhj.kotlin.base.utils.AppPrefsUtils
 import com.xhj.kotlin.base.common.BaseConstant
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

@@ -2,7 +2,7 @@ package com.xhj.kotlin.user.utils
 
 import com.xhj.kotlin.base.common.BaseConstant
 import com.xhj.kotlin.provider.common.ProviderConstant
-import com.kotlin.base.utils.AppPrefsUtils
+import com.xhj.kotlin.base.utils.AppPrefsUtils
 import com.xhj.kotlin.user.data.protocol.UserInfo
 
 /*

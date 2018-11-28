@@ -13,7 +13,7 @@ import com.jph.takephoto.app.TakePhoto
 import com.jph.takephoto.app.TakePhotoImpl
 import com.jph.takephoto.compress.CompressConfig
 import com.jph.takephoto.model.TResult
-import com.kotlin.base.utils.AppPrefsUtils
+import com.xhj.kotlin.base.utils.AppPrefsUtils
 import com.qiniu.android.storage.UploadManager
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.xhj.kotlin.base.ext.onClick

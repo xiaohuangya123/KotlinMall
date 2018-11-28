@@ -37,7 +37,9 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginView ,View.OnClick
         mHeaderBar.getRightView().onClick(this)
         mForgetPwdTv.onClick(this)
     }
-
+    /*
+       Dagger注册
+    */
     override fun injectComponent() {
         DaggerUserComponent.builder()
             .activityComponent(activityComponent)
@@ -61,15 +63,21 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginView ,View.OnClick
         }
     }
 
+    /*
+       判断按钮是否可用
+    */
     private fun isBtnEnable() : Boolean{
         return mMobileEt.text.isNullOrBlank().not() &&
                 mPwdEt.text.isNullOrBlank().not()
     }
 
+    /*
+       登录回调
+    */
     override fun onLoginResult(result: UserInfo) {
         toast("登录成功")
         //登录成功后存储用户信息
         UserPrefsUtils.putUserInfo(result)
-        startActivity<UserInfoActivity>()
+        finish()
     }
 }
