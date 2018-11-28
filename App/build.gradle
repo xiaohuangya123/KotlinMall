@@ -34,6 +34,5 @@ dependencies {
     }
     implementation project(':MessageCenter')
 
-    // Anko Commons
-    api "org.jetbrains.anko:anko-commons:$anko_version"
+
 }
