@@ -83,6 +83,8 @@ dependencies {
     api 'com.github.shts:TriangleLabelView:1.1.2'
     //画廊插件
     api 'com.github.crosswall:Android-Coverflow:release-v1.0.5'
+    //MulitStateView
+    api "com.github.Kennyc1012:MultiStateView:$multi_state_view_version"
 
 
 

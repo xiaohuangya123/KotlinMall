@@ -26,6 +26,8 @@ buildscript {
 
     ext.rx_rxpermissions_version = '0.10.2'
 
+    ext.multi_state_view_version = '1.3.2'
+
     repositories {
         google()
         jcenter()
