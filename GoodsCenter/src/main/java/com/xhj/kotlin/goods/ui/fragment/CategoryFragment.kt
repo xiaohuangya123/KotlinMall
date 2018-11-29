@@ -55,7 +55,6 @@ class CategoryFragment: BaseMvpFragment<CategoryPresenter>(), CategoryView {
                     category.isSelected = item.id == category.id
                 }
                 topAdapter.notifyDataSetChanged()
-
                 loadData(item.id)
             }
         })
@@ -78,8 +77,7 @@ class CategoryFragment: BaseMvpFragment<CategoryPresenter>(), CategoryView {
 //        if (parentId != 0) {
 //            mMultiStateView.startLoading()
 //        }
-
-        mPresenter.getCategory(0)
+        mPresenter.getCategory(parentId)
 
     }
 
@@ -98,6 +96,7 @@ class CategoryFragment: BaseMvpFragment<CategoryPresenter>(), CategoryView {
     override fun onGetCategoryResult(result: MutableList<Category>?) {
         result?.let {
             if(result[0].parentId == 0){
+                result[0].isSelected = true
                 topAdapter.setData(result)
                 mPresenter.getCategory(result[0].id)
             }else{
