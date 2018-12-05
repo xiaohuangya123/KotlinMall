@@ -9,7 +9,7 @@ import dagger.Provides
  * Author: Created by XHJBB on 2018/11/10.
  */
 @Module
-class CategoryrModule {
+class CategoryModule {
 
     @Provides
     fun providesCategoryService(categoryService: CategoryServiceImpl): CategoryService {

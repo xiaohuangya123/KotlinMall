@@ -12,12 +12,14 @@ import com.xhj.kotlin.base.ui.fragment.BaseMvpFragment
 import com.xhj.kotlin.goods.R
 import com.xhj.kotlin.goods.data.protocol.Category
 import com.xhj.kotlin.goods.injection.component.DaggerCategoryComponent
-import com.xhj.kotlin.goods.injection.module.CategoryrModule
+import com.xhj.kotlin.goods.injection.module.CategoryModule
 import com.xhj.kotlin.goods.presenter.CategoryPresenter
 import com.xhj.kotlin.goods.presenter.view.CategoryView
+import com.xhj.kotlin.goods.ui.activity.GoodsActivity
 import com.xhj.kotlin.goods.ui.adapter.SecondCategoryAdapter
 import com.xhj.kotlin.goods.ui.adapter.TopCategoryAdapter
 import kotlinx.android.synthetic.main.fragment_category.*
+import org.jetbrains.anko.support.v4.startActivity
 
 /**
  * Author: Created by XHJ on 2018/11/29.
@@ -64,19 +66,18 @@ class CategoryFragment: BaseMvpFragment<CategoryPresenter>(), CategoryView {
         mSecondCategoryRv.adapter = secondAdapter
         secondAdapter.setOnItemClickListener(object : BaseRecyclerViewAdapter.OnItemClickListener<Category> {
             override fun onItemClick(item: Category, position: Int) {
-                TODO()
+                startActivity<GoodsActivity>("categoryId" to item.id)
             }
         })
-
     }
 
     /*
         加载数据
      */
     private fun loadData(parentId: Int = 0) {
-//        if (parentId != 0) {
-//            mMultiStateView.startLoading()
-//        }
+        if (parentId != 0) {
+            mMultiStateView.viewState = MultiStateView.VIEW_STATE_LOADING
+        }
         mPresenter.getCategory(parentId)
 
     }
@@ -85,7 +86,7 @@ class CategoryFragment: BaseMvpFragment<CategoryPresenter>(), CategoryView {
 
         DaggerCategoryComponent.builder()
             .activityComponent(activityComponent)
-            .categoryrModule(CategoryrModule())
+            .categoryModule(CategoryModule())
             .build()
             .inject(this)
         mPresenter.mView = this
@@ -94,15 +95,22 @@ class CategoryFragment: BaseMvpFragment<CategoryPresenter>(), CategoryView {
         获取商品分类 回调
      */
     override fun onGetCategoryResult(result: MutableList<Category>?) {
-        result?.let {
+        if(result != null && result.size>0 ){
             if(result[0].parentId == 0){
                 result[0].isSelected = true
                 topAdapter.setData(result)
                 mPresenter.getCategory(result[0].id)
             }else{
                 secondAdapter.setData(result)
+                mTopCategoryIv.visibility = View.VISIBLE
+                mCategoryTitleTv.visibility = View.VISIBLE
                 mMultiStateView.viewState = MultiStateView.VIEW_STATE_CONTENT
             }
+        }else{
+            mTopCategoryIv.visibility = View.GONE
+            mCategoryTitleTv.visibility = View.GONE
+            mMultiStateView.viewState = MultiStateView.VIEW_STATE_EMPTY
         }
+
     }
 }

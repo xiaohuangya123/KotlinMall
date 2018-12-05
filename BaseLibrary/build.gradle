@@ -33,7 +33,7 @@ dependencies {
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     api 'androidx.recyclerview:recyclerview:1.0.0'
     api 'androidx.cardview:cardview:1.0.0'
-
+    api 'com.google.android.material:material:1.1.0-alpha01'
     //Glide
     api "com.github.bumptech.glide:glide:$glide_version"
 //    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
@@ -85,6 +85,9 @@ dependencies {
     api 'com.github.crosswall:Android-Coverflow:release-v1.0.5'
     //MulitStateView
     api "com.github.Kennyc1012:MultiStateView:$multi_state_view_version"
+    //多种下拉刷新效果、上拉加载更多、可配置自定义头部广告位
+    api 'cn.bingoogolapple:bga-refreshlayout:1.1.8@aar'
+
 
 
 

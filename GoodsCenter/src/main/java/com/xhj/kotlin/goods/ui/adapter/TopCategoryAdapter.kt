@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.xhj.kotlin.base.ui.adapter.BaseRecyclerViewAdapter
-import com.xhj.kotlin.base.utils.GlideUtils
 import com.xhj.kotlin.goods.R
 import com.xhj.kotlin.goods.data.protocol.Category
 import kotlinx.android.synthetic.main.layout_top_category_item.view.*
