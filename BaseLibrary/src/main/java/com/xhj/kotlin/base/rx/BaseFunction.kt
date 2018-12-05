@@ -1,6 +1,5 @@
 package com.xhj.kotlin.base.rx
 
-import android.util.Log
 import com.xhj.kotlin.base.common.ResultCode
 import com.xhj.kotlin.base.data.protocol.BaseResp
 import io.reactivex.Observable
