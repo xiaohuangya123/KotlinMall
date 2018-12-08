@@ -21,6 +21,7 @@ import com.xhj.kotlin.goods.ui.adapter.SecondCategoryAdapter
 import com.xhj.kotlin.goods.ui.adapter.TopCategoryAdapter
 import kotlinx.android.synthetic.main.fragment_category.*
 import org.jetbrains.anko.support.v4.startActivity
+import com.xhj.kotlin.base.ext.startLoading
 
 /**
  * Author: Created by XHJ on 2018/11/29.
@@ -77,7 +78,7 @@ class CategoryFragment: BaseMvpFragment<CategoryPresenter>(), CategoryView {
      */
     private fun loadData(parentId: Int = 0) {
         if (parentId != 0) {
-            mMultiStateView.viewState = MultiStateView.VIEW_STATE_LOADING
+            mMultiStateView.startLoading()
         }
         mPresenter.getCategory(parentId)
 

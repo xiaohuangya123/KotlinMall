@@ -15,6 +15,7 @@ class BaseFunction<T> : Function<BaseResp<T>, ObservableSource<T>>{
         if (t.status != ResultCode.SUCCESS ) {
             return Observable.error(BaseException(t.status, t.message))
         }
+
         return Observable.just(t.data)
     }
 

@@ -7,14 +7,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kotlin.mall.common.*
 import com.kotlin.mall.ui.adapter.TopicAdapter
+import com.xhj.kotlin.base.ext.onClick
 import com.xhj.kotlin.base.ui.fragment.BaseFragment
 import com.xhj.kotlin.base.widgets.BannerImageLoader
+import com.xhj.kotlin.goods.ui.activity.SearchGoodsActivity
 import com.xhj.kotlin.mall.R
 import com.xhj.kotlin.mall.ui.adapter.HomeDiscountAdapter
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
 import kotlinx.android.synthetic.main.fragment_home.*
 import me.crosswall.lib.coverflow.CoverFlow
+import org.jetbrains.anko.support.v4.startActivity
+import org.jetbrains.anko.support.v4.toast
 
 /**
  * Author: Created by XHJ on 2018/11/26.
@@ -28,10 +32,24 @@ class HomeFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
         initBanner()
         initNews()
         initDiscount()
         initTopic()
+    }
+
+    /*
+        初始化视图
+     */
+    private fun initView() {
+        mSearchEt.onClick {
+            startActivity<SearchGoodsActivity>()
+        }
+
+        mScanIv.onClick {
+            toast(R.string.coming_soon_tip)
+        }
     }
 
     private fun initDiscount(){
