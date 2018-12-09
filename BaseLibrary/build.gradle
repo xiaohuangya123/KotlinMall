@@ -96,7 +96,7 @@ dependencies {
     //ARouter
     api "com.alibaba:arouter-api:$arouter_api_version"
     //BadgeView
-    api 'q.rorbin:badgeview:1.1.2'
+    api 'q.rorbin:badgeview:1.1.3'
 
 
 

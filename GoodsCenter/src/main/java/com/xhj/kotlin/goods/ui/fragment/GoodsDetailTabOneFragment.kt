@@ -23,6 +23,7 @@ import com.xhj.kotlin.goods.data.protocol.Goods
 import com.xhj.kotlin.goods.event.AddCartEvent
 import com.xhj.kotlin.goods.event.GoodsDetailImageEvent
 import com.xhj.kotlin.goods.event.SkuChangedEvent
+import com.xhj.kotlin.goods.event.UpdateCartSizeEvent
 import com.xhj.kotlin.goods.injection.component.DaggerGoodsComponent
 import com.xhj.kotlin.goods.injection.module.GoodsModule
 import com.xhj.kotlin.goods.presenter.GoodsDetailPresenter
@@ -32,7 +33,6 @@ import com.xhj.kotlin.goods.widgets.GoodsSkuPopView
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
 import kotlinx.android.synthetic.main.fragment_goods_detail_tab_one.*
-import org.jetbrains.anko.contentView
 import org.jetbrains.anko.support.v4.toast
 
 /**
@@ -45,7 +45,7 @@ class GoodsDetailTabOneFragment: BaseMvpFragment<GoodsDetailPresenter>(), GoodsD
     private lateinit var mAnimationStart: Animation
     //SKU弹层退场动画
     private lateinit var mAnimationEnd: Animation
-
+    //当前详情页所展示的商品
     private var mCurGoods:Goods? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -80,7 +80,6 @@ class GoodsDetailTabOneFragment: BaseMvpFragment<GoodsDetailPresenter>(), GoodsD
             )
 
             (activity as BaseActivity).contentView.startAnimation(mAnimationStart)
-
         }
     }
 
@@ -135,7 +134,7 @@ class GoodsDetailTabOneFragment: BaseMvpFragment<GoodsDetailPresenter>(), GoodsD
      * 加入购物车 回调
      */
     override fun onAddCartResult(result: Int) {
-        toast("cart---$result")
+        Bus.send(UpdateCartSizeEvent())
     }
 
     /**
@@ -145,12 +144,10 @@ class GoodsDetailTabOneFragment: BaseMvpFragment<GoodsDetailPresenter>(), GoodsD
         mSkuPop.setGoodsIcon(result.goodsDefaultIcon)
         mSkuPop.setGoodsCode(result.goodsCode)
         mSkuPop.setGoodsPrice(result.goodsDefaultPrice)
-
         mSkuPop.setSkuData(result.goodsSku)
-
     }
 
-    /*
+    /**
       初始化缩放动画
    */
     private fun initAnim() {

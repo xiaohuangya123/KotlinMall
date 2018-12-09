@@ -3,6 +3,8 @@ package com.xhj.kotlin.goods.presenter
 import com.xhj.kotlin.base.ext.execute
 import com.xhj.kotlin.base.presenter.BasePresenter
 import com.xhj.kotlin.base.rx.BaseObserver
+import com.xhj.kotlin.base.utils.AppPrefsUtils
+import com.xhj.kotlin.goods.common.GoodsConstant
 import com.xhj.kotlin.goods.data.protocol.Goods
 import com.xhj.kotlin.goods.presenter.view.GoodsDetailView
 import com.xhj.kotlin.goods.service.CartService
@@ -47,6 +49,8 @@ class GoodsDetailPresenter @Inject constructor() : BasePresenter<GoodsDetailView
         cartService.addCart(goodsId, goodsDesc, goodsIcon, goodsPrice, goodsCount, goodsSku)
             .execute(object : BaseObserver<Int>(mView) {
             override fun onNext(t: Int) {
+                //存放购物车中商品数量，用于购物车的角标显示
+                AppPrefsUtils.putInt(GoodsConstant.SP_CART_SIZE, t)
                 mView.onAddCartResult(t)
             }
         }, lifecycleProvider)

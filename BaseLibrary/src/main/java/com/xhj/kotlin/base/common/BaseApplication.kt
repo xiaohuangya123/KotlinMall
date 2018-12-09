@@ -3,6 +3,7 @@ package com.xhj.kotlin.base.common
 import android.app.Application
 import android.content.Context
 import com.alibaba.android.arouter.launcher.ARouter
+import com.eightbitlab.rxbus.Bus
 import com.orhanobut.logger.*
 import com.xhj.kotlin.base.injection.component.AppComponent
 import com.xhj.kotlin.base.injection.component.DaggerAppComponent

@@ -1,28 +1,37 @@
 package com.xhj.kotlin.goods.ui.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.launcher.ARouter
+import android.view.Gravity
 import com.eightbitlab.rxbus.Bus
+import com.eightbitlab.rxbus.registerInBus
 import com.google.android.material.tabs.TabLayout
 import com.xhj.kotlin.base.ext.onClick
 import com.xhj.kotlin.base.ui.activity.BaseActivity
+import com.xhj.kotlin.base.utils.AppPrefsUtils
 import com.xhj.kotlin.goods.R
+import com.xhj.kotlin.goods.common.GoodsConstant
 import com.xhj.kotlin.goods.event.AddCartEvent
+import com.xhj.kotlin.goods.event.UpdateCartSizeEvent
 import com.xhj.kotlin.goods.ui.adapter.GoodsDetailVpAdapter
 import com.xhj.kotlin.provider.common.afterLogin
-import com.xhj.kotlin.provider.common.isLogined
-import com.xhj.kotlin.provider.router.RouterPath
 import kotlinx.android.synthetic.main.activity_goods_detail.*
+import org.jetbrains.anko.toast
+import q.rorbin.badgeview.QBadgeView
 
 /**
  * Author: Created by XHJ on 2018/12/8.
  */
 class GoodsDetailActivity: BaseActivity() {
+
+    private lateinit var mCartBadge:QBadgeView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_goods_detail)
 
         initView()
+        initObserve()
+        loadCartSize()
     }
 
     private fun initView() {
@@ -36,5 +45,29 @@ class GoodsDetailActivity: BaseActivity() {
             }
         }
 
+        mCartBadge = QBadgeView(this)
+    }
+
+    private fun loadCartSize() {
+        setCartBadge()
+    }
+
+    private fun initObserve() {
+        Bus.observe<UpdateCartSizeEvent>()
+            .subscribe{
+                setCartBadge()
+            }.registerInBus(this)
+    }
+
+    private fun setCartBadge() {
+        mCartBadge.badgeGravity = Gravity.END or Gravity.TOP
+        mCartBadge.setGravityOffset(22f,-2f ,true)
+        mCartBadge.setBadgeTextSize(8f, true)
+        mCartBadge.bindTarget(mEnterCartTv).badgeNumber = AppPrefsUtils.getInt(GoodsConstant.SP_CART_SIZE)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Bus.unregister(this)
     }
 }

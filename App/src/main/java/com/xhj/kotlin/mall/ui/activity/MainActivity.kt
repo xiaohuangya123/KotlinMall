@@ -4,6 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
+import com.eightbitlab.rxbus.Bus
+import com.eightbitlab.rxbus.registerInBus
+import com.xhj.kotlin.base.utils.AppPrefsUtils
+import com.xhj.kotlin.goods.common.GoodsConstant
+import com.xhj.kotlin.goods.event.UpdateCartSizeEvent
 import com.xhj.kotlin.goods.ui.fragment.CategoryFragment
 import com.xhj.kotlin.mall.R
 import com.xhj.kotlin.mall.ui.fragment.HomeFragment
@@ -25,12 +30,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mBottomNavBar.checkCartBadge(20)
-        mBottomNavBar.checkMsgBadge(false)
-
         initFragment()
         initBottomNav()
         changeFragment(0)
+        initObserve()
+        loadCartSize()
     }
 
     private fun initFragment() {
@@ -71,5 +75,21 @@ class MainActivity : AppCompatActivity() {
         }
         manager.show(mStack[position])
         manager.commit()
+    }
+
+    private fun initObserve() {
+        Bus.observe<UpdateCartSizeEvent>()
+            .subscribe{
+                mBottomNavBar.checkCartBadge(AppPrefsUtils.getInt(GoodsConstant.SP_CART_SIZE))
+            }.registerInBus(this)
+    }
+
+    private fun loadCartSize(){
+        mBottomNavBar.checkCartBadge(AppPrefsUtils.getInt(GoodsConstant.SP_CART_SIZE))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Bus.unregister(this)
     }
 }

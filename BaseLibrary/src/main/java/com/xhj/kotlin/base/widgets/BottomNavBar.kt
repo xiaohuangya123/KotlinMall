@@ -2,6 +2,7 @@ package com.xhj.kotlin.base.widgets
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.Gravity
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
 import com.ashokvarma.bottomnavigation.ShapeBadgeItem
