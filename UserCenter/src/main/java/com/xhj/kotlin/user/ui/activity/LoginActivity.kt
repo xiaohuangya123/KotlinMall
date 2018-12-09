@@ -2,9 +2,11 @@ package com.xhj.kotlin.user.ui.activity
 
 import android.os.Bundle
 import android.view.View
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.xhj.kotlin.base.ext.enable
 import com.xhj.kotlin.base.ext.onClick
 import com.xhj.kotlin.base.ui.activity.BaseMvpActivity
+import com.xhj.kotlin.provider.router.RouterPath
 import com.xhj.kotlin.user.R
 import com.xhj.kotlin.user.data.protocol.UserInfo
 import com.xhj.kotlin.user.injection.component.DaggerUserComponent
@@ -19,6 +21,7 @@ import org.jetbrains.anko.toast
 /**
  * 登陆界面
  */
+@Route(path = RouterPath.UserCenter.PATH_LOGIN)
 class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginView ,View.OnClickListener{
 
     override fun onCreate(savedInstanceState: Bundle?) {
