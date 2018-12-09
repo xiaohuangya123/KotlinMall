@@ -87,6 +87,16 @@ dependencies {
     api "com.github.Kennyc1012:MultiStateView:$multi_state_view_version"
     //多种下拉刷新效果、上拉加载更多、可配置自定义头部广告位
     api 'cn.bingoogolapple:bga-refreshlayout:1.1.8@aar'
+    //购物车的商品数量
+    api 'ren.qinc.numberbutton:numberbutton:0.0.1'
+    //Kotlin Bus
+    api 'com.eightbitlab:rxbus:1.0.2'
+    //FlowLayout
+    api 'com.zhy:flowlayout-lib:1.0.3'
+    //ARouter
+    api "com.alibaba:arouter-api:$arouter_api_version"
+    //BadgeView
+    api 'q.rorbin:badgeview:1.1.2'
 
 
 

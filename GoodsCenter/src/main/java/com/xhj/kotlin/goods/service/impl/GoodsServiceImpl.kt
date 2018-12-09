@@ -8,6 +8,7 @@ import io.reactivex.Observable
 import javax.inject.Inject
 
 class GoodsServiceImpl @Inject constructor() :GoodsService{
+
     @Inject
     lateinit var repository : GoodsRepository
 
@@ -20,6 +21,13 @@ class GoodsServiceImpl @Inject constructor() :GoodsService{
     */
     override fun getGoodsListByKeyword(keyword: String, pageNo: Int): Observable<MutableList<Goods>?> {
         return repository.getGoodsListByKeyword(keyword,pageNo).convert()
+    }
+
+    /*
+        获取商品详情
+     */
+    override fun getGoodsDetail(goodsId: Int): Observable<Goods> {
+        return repository.getGoodsDetail(goodsId).convert()
     }
 
 }

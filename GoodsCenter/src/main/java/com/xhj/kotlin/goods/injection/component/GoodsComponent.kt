@@ -4,6 +4,7 @@ import com.xhj.kotlin.base.injection.PerComponentScope
 import com.xhj.kotlin.base.injection.component.ActivityComponent
 import com.xhj.kotlin.goods.injection.module.GoodsModule
 import com.xhj.kotlin.goods.ui.activity.GoodsActivity
+import com.xhj.kotlin.goods.ui.fragment.GoodsDetailTabOneFragment
 import dagger.Component
 
 /**
@@ -14,5 +15,5 @@ import dagger.Component
     ,modules = arrayOf(GoodsModule::class))
 interface GoodsComponent {
     fun inject(activity: GoodsActivity)
-
+    fun inject(fragment: GoodsDetailTabOneFragment)
 }
