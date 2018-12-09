@@ -2,11 +2,15 @@ package com.xhj.kotlin.goods.ui.activity
 
 import android.os.Bundle
 import com.alibaba.android.arouter.launcher.ARouter
+import com.eightbitlab.rxbus.Bus
 import com.google.android.material.tabs.TabLayout
 import com.xhj.kotlin.base.ext.onClick
 import com.xhj.kotlin.base.ui.activity.BaseActivity
 import com.xhj.kotlin.goods.R
+import com.xhj.kotlin.goods.event.AddCartEvent
 import com.xhj.kotlin.goods.ui.adapter.GoodsDetailVpAdapter
+import com.xhj.kotlin.provider.common.afterLogin
+import com.xhj.kotlin.provider.common.isLogined
 import com.xhj.kotlin.provider.router.RouterPath
 import kotlinx.android.synthetic.main.activity_goods_detail.*
 
@@ -27,7 +31,9 @@ class GoodsDetailActivity: BaseActivity() {
         mGoodsDetailTab.setupWithViewPager(mGoodsDetailVp)
 
         mAddCartBtn.onClick {
-            ARouter.getInstance().build(RouterPath.UserCenter.PATH_LOGIN).navigation()
+            afterLogin {
+                Bus.send(AddCartEvent())
+            }
         }
 
     }

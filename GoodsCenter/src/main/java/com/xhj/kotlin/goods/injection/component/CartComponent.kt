@@ -13,8 +13,6 @@ import dagger.Component
  */
 @PerComponentScope
 @Component(dependencies = arrayOf(ActivityComponent::class)
-    ,modules = arrayOf(GoodsModule::class, CartModule::class))
-interface GoodsComponent {
-    fun inject(activity: GoodsActivity)
-    fun inject(fragment: GoodsDetailTabOneFragment)
+    ,modules = arrayOf(CartModule::class))
+interface CartComponent {
 }

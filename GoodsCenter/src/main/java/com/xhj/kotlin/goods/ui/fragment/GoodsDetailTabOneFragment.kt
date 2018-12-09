@@ -20,6 +20,7 @@ import com.xhj.kotlin.base.utils.YuanFenConverter
 import com.xhj.kotlin.base.widgets.BannerImageLoader
 import com.xhj.kotlin.goods.common.GoodsConstant
 import com.xhj.kotlin.goods.data.protocol.Goods
+import com.xhj.kotlin.goods.event.AddCartEvent
 import com.xhj.kotlin.goods.event.GoodsDetailImageEvent
 import com.xhj.kotlin.goods.event.SkuChangedEvent
 import com.xhj.kotlin.goods.injection.component.DaggerGoodsComponent
@@ -32,6 +33,7 @@ import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
 import kotlinx.android.synthetic.main.fragment_goods_detail_tab_one.*
 import org.jetbrains.anko.contentView
+import org.jetbrains.anko.support.v4.toast
 
 /**
  * Author: Created by XHJ on 2018/11/29.
@@ -60,7 +62,7 @@ class GoodsDetailTabOneFragment: BaseMvpFragment<GoodsDetailPresenter>(), GoodsD
         initObserve()
     }
 
-    /*
+    /**
         初始化视图
      */
     private fun initView() {
@@ -82,7 +84,7 @@ class GoodsDetailTabOneFragment: BaseMvpFragment<GoodsDetailPresenter>(), GoodsD
         }
     }
 
-    /*
+    /**
         初始化sku弹层
      */
     private fun initSkuPop() {
@@ -92,14 +94,14 @@ class GoodsDetailTabOneFragment: BaseMvpFragment<GoodsDetailPresenter>(), GoodsD
         }
     }
 
-    /*
+    /**
         加载数据
      */
     private fun loadData() {
         mPresenter.getGoodsDetailList(activity!!.intent.getIntExtra(GoodsConstant.KEY_GOODS_ID, -1))
     }
 
-    /*
+    /**
         Dagger注册
      */
     override fun injectComponent() {
@@ -111,7 +113,7 @@ class GoodsDetailTabOneFragment: BaseMvpFragment<GoodsDetailPresenter>(), GoodsD
         mPresenter.mView = this
     }
 
-    /*
+    /**
         获取商品详情 回调
      */
     override fun onGetGoodsDetailResult(result: Goods) {
@@ -129,7 +131,14 @@ class GoodsDetailTabOneFragment: BaseMvpFragment<GoodsDetailPresenter>(), GoodsD
         loadPopData(result)
     }
 
-    /*
+    /**
+     * 加入购物车 回调
+     */
+    override fun onAddCartResult(result: Int) {
+        toast("cart---$result")
+    }
+
+    /**
         加载SKU数据
      */
     private fun loadPopData(result: Goods) {
@@ -156,7 +165,7 @@ class GoodsDetailTabOneFragment: BaseMvpFragment<GoodsDetailPresenter>(), GoodsD
         mAnimationEnd.fillAfter = true
     }
 
-    /*
+    /**
         监听SKU变化及加入购物车事件
      */
     private fun initObserve(){
@@ -164,9 +173,14 @@ class GoodsDetailTabOneFragment: BaseMvpFragment<GoodsDetailPresenter>(), GoodsD
             .subscribe {
                 mSkuSelectedTv.text = mSkuPop.getSelectSku() +GoodsConstant.SKU_SEPARATOR + mSkuPop.getSelectCount()+"件"
             }.registerInBus(this)
+
+        Bus.observe<AddCartEvent>()
+            .subscribe{
+                addCart()
+            }.registerInBus(this)
     }
 
-    /*
+    /**
         取消事件监听
      */
     override fun onDestroy() {
@@ -174,5 +188,20 @@ class GoodsDetailTabOneFragment: BaseMvpFragment<GoodsDetailPresenter>(), GoodsD
         Bus.unregister(this)
     }
 
+    /**
+        加入购物车
+     */
+    private fun addCart(){
+        mCurGoods?.let {
+            mPresenter.addCart(it.id,
+                it.goodsDesc,
+                it.goodsDefaultIcon,
+                it.goodsDefaultPrice,
+                mSkuPop.getSelectCount(),
+                mSkuPop.getSelectSku()
+            )
+        }
+
+    }
 
 }
