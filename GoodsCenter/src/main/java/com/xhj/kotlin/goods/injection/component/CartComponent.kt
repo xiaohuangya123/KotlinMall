@@ -5,6 +5,7 @@ import com.xhj.kotlin.base.injection.component.ActivityComponent
 import com.xhj.kotlin.goods.injection.module.CartModule
 import com.xhj.kotlin.goods.injection.module.GoodsModule
 import com.xhj.kotlin.goods.ui.activity.GoodsActivity
+import com.xhj.kotlin.goods.ui.fragment.CartFragment
 import com.xhj.kotlin.goods.ui.fragment.GoodsDetailTabOneFragment
 import dagger.Component
 
@@ -15,4 +16,5 @@ import dagger.Component
 @Component(dependencies = arrayOf(ActivityComponent::class)
     ,modules = arrayOf(CartModule::class))
 interface CartComponent {
+    fun inject(fragement:CartFragment)
 }
