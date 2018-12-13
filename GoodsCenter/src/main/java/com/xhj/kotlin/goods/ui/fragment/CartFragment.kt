@@ -12,9 +12,11 @@ import com.orhanobut.logger.Logger
 import com.xhj.kotlin.base.ext.onClick
 import com.xhj.kotlin.base.ext.startLoading
 import com.xhj.kotlin.base.ui.fragment.BaseMvpFragment
+import com.xhj.kotlin.base.utils.YuanFenConverter
 import com.xhj.kotlin.goods.R
 import com.xhj.kotlin.goods.data.protocol.CartGoods
 import com.xhj.kotlin.goods.event.CartAllCheckedEvent
+import com.xhj.kotlin.goods.event.UpdateTotalPriceEvent
 import com.xhj.kotlin.goods.injection.component.DaggerCartComponent
 import com.xhj.kotlin.goods.injection.module.CartModule
 import com.xhj.kotlin.goods.presenter.CartListPresenter
@@ -28,6 +30,7 @@ import kotlinx.android.synthetic.main.fragment_cart.*
 class CartFragment: BaseMvpFragment<CartListPresenter>(), CartListView {
 
     private lateinit var mAdapter:CartGoodsAdapter
+    private var mTotalPrice:Long = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -55,6 +58,7 @@ class CartFragment: BaseMvpFragment<CartListPresenter>(), CartListView {
                 item.isSelected = mAllCheckedCb.isChecked
             }
             mAdapter.notifyDataSetChanged()
+            updateTotalPrice()
         }
 
     }
@@ -71,6 +75,12 @@ class CartFragment: BaseMvpFragment<CartListPresenter>(), CartListView {
         Bus.observe<CartAllCheckedEvent>()
             .subscribe {
                 mAllCheckedCb.isChecked = it.isAllChecked
+                updateTotalPrice()
+            }.registerInBus(this)
+
+        Bus.observe<UpdateTotalPriceEvent>()
+            .subscribe{
+                updateTotalPrice()
             }.registerInBus(this)
     }
 
@@ -97,5 +107,13 @@ class CartFragment: BaseMvpFragment<CartListPresenter>(), CartListView {
     override fun onDestroy() {
         super.onDestroy()
         Bus.unregister(this)
+    }
+
+    private fun updateTotalPrice(){
+        mTotalPrice = mAdapter.dataList
+            .filter { it.isSelected }
+            .map { it.goodsCount * it.goodsPrice }
+            .sum()
+        mTotalPriceTv.text = "合计：${YuanFenConverter.changeF2Y(mTotalPrice)}"
     }
 }

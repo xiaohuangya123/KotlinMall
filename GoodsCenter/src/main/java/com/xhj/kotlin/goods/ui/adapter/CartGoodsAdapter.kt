@@ -58,7 +58,7 @@ class CartGoodsAdapter(context: Context) : BaseRecyclerViewAdapter<CartGoods, Ca
         }
 
         //商品数量变化监听
-        holder.itemView.mGoodsCountBtn.getEditText().addTextChangedListener(object:DefaultTextWatcher(){
+        holder.itemView.mGoodsCountBtn.getEditText().addTextChangedListener(object : DefaultTextWatcher(){
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 model.goodsCount = s.toString().toInt()
                 Bus.send(UpdateTotalPriceEvent())
