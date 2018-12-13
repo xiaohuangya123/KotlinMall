@@ -52,7 +52,7 @@ class CartGoodsAdapter(context: Context) : BaseRecyclerViewAdapter<CartGoods, Ca
         //选中按钮事件
         holder.itemView.mCheckedCb.onClick {
             model.isSelected = holder.itemView.mCheckedCb.isChecked
-            val isAllChecked = dataList.all {it.isSelected }
+            val isAllChecked = dataList.all { it.isSelected }
             Bus.send(CartAllCheckedEvent(isAllChecked))
             notifyDataSetChanged()
         }

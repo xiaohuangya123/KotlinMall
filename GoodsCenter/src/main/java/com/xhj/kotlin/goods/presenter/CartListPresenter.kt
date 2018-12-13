@@ -4,11 +4,8 @@ import com.xhj.kotlin.base.ext.execute
 import com.xhj.kotlin.base.presenter.BasePresenter
 import com.xhj.kotlin.base.rx.BaseObserver
 import com.xhj.kotlin.goods.data.protocol.CartGoods
-import com.xhj.kotlin.goods.data.protocol.Category
 import com.xhj.kotlin.goods.presenter.view.CartListView
-import com.xhj.kotlin.goods.presenter.view.CategoryView
 import com.xhj.kotlin.goods.service.CartService
-import com.xhj.kotlin.goods.service.CategoryService
 import javax.inject.Inject
 
 class CartListPresenter @Inject constructor(): BasePresenter<CartListView>(){

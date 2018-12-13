@@ -4,24 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.eightbitlab.rxbus.Bus
+import com.eightbitlab.rxbus.registerInBus
 import com.kennyc.view.MultiStateView
+import com.orhanobut.logger.Logger
+import com.xhj.kotlin.base.ext.onClick
 import com.xhj.kotlin.base.ext.startLoading
-import com.xhj.kotlin.base.ui.adapter.BaseRecyclerViewAdapter
 import com.xhj.kotlin.base.ui.fragment.BaseMvpFragment
 import com.xhj.kotlin.goods.R
-import com.xhj.kotlin.goods.common.GoodsConstant
 import com.xhj.kotlin.goods.data.protocol.CartGoods
-import com.xhj.kotlin.goods.data.protocol.Category
+import com.xhj.kotlin.goods.event.CartAllCheckedEvent
 import com.xhj.kotlin.goods.injection.component.DaggerCartComponent
-import com.xhj.kotlin.goods.injection.component.DaggerCategoryComponent
 import com.xhj.kotlin.goods.injection.module.CartModule
-import com.xhj.kotlin.goods.injection.module.CategoryModule
 import com.xhj.kotlin.goods.presenter.CartListPresenter
-import com.xhj.kotlin.goods.presenter.CategoryPresenter
 import com.xhj.kotlin.goods.presenter.view.CartListView
-import com.xhj.kotlin.goods.presenter.view.CategoryView
 import com.xhj.kotlin.goods.ui.adapter.CartGoodsAdapter
 import kotlinx.android.synthetic.main.fragment_cart.*
 
@@ -41,6 +38,7 @@ class CartFragment: BaseMvpFragment<CartListPresenter>(), CartListView {
         super.onViewCreated(view, savedInstanceState)
         initView()
         loadData()
+        initObserve()
     }
 
     /**
@@ -50,6 +48,15 @@ class CartFragment: BaseMvpFragment<CartListPresenter>(), CartListView {
         mCartGoodsRv.layoutManager = LinearLayoutManager(context)
         mAdapter = CartGoodsAdapter(context!!)
         mCartGoodsRv.adapter = mAdapter
+
+        //全选或取消全选
+        mAllCheckedCb.onClick {
+            for(item in mAdapter.dataList){
+                item.isSelected = mAllCheckedCb.isChecked
+            }
+            mAdapter.notifyDataSetChanged()
+        }
+
     }
 
     /**
@@ -60,9 +67,14 @@ class CartFragment: BaseMvpFragment<CartListPresenter>(), CartListView {
         mPresenter.getCartList()
     }
 
+    private fun initObserve() {
+        Bus.observe<CartAllCheckedEvent>()
+            .subscribe {
+                mAllCheckedCb.isChecked = it.isAllChecked
+            }.registerInBus(this)
+    }
 
     override fun injectComponent() {
-
         DaggerCartComponent.builder()
             .activityComponent(activityComponent)
             .cartModule(CartModule())
@@ -80,5 +92,10 @@ class CartFragment: BaseMvpFragment<CartListPresenter>(), CartListView {
         }else{
             mMultiStateView.viewState = MultiStateView.VIEW_STATE_EMPTY
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Bus.unregister(this)
     }
 }
