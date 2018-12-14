@@ -1,6 +1,7 @@
 package com.xhj.kotlin.goods.service.impl
 
 import com.xhj.kotlin.base.ext.convert
+import com.xhj.kotlin.base.ext.convertBoolean
 import com.xhj.kotlin.goods.data.protocol.CartGoods
 import com.xhj.kotlin.goods.data.repository.CartRepository
 import com.xhj.kotlin.goods.service.CartService
@@ -8,6 +9,7 @@ import io.reactivex.Observable
 import javax.inject.Inject
 
 class CartServiceImpl @Inject constructor() :CartService{
+
 
     @Inject
     lateinit var repository : CartRepository
@@ -32,6 +34,13 @@ class CartServiceImpl @Inject constructor() :CartService{
    */
     override fun getCartList(): Observable<MutableList<CartGoods>?> {
         return repository.getCartList().convert()
+    }
+
+    /*
+        删除购物车商品
+     */
+    override fun deleteCartList(list: List<Int>): Observable<Boolean> {
+        return repository.deleteCartList(list).convertBoolean()
     }
 
 

@@ -1,7 +1,10 @@
 package com.xhj.kotlin.goods.service
 
+import com.xhj.kotlin.base.data.net.RetrofitFactory
 import com.xhj.kotlin.base.data.protocol.BaseResp
+import com.xhj.kotlin.goods.data.api.CartApi
 import com.xhj.kotlin.goods.data.protocol.CartGoods
+import com.xhj.kotlin.goods.data.protocol.DeleteCartReq
 import io.reactivex.Observable
 import retrofit2.http.POST
 
@@ -17,4 +20,9 @@ interface CartService {
     */
     @POST("cart/getList")
     fun getCartList(): Observable<MutableList<CartGoods>?>
+
+    /*
+        删除购物车商品
+     */
+    fun deleteCartList(list: List<Int>): Observable<Boolean>
 }

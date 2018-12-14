@@ -10,12 +10,17 @@ import com.eightbitlab.rxbus.registerInBus
 import com.kennyc.view.MultiStateView
 import com.orhanobut.logger.Logger
 import com.xhj.kotlin.base.ext.onClick
+import com.xhj.kotlin.base.ext.setVisible
 import com.xhj.kotlin.base.ext.startLoading
 import com.xhj.kotlin.base.ui.fragment.BaseMvpFragment
+import com.xhj.kotlin.base.utils.AppPrefsUtils
 import com.xhj.kotlin.base.utils.YuanFenConverter
 import com.xhj.kotlin.goods.R
+import com.xhj.kotlin.goods.common.GoodsConstant
 import com.xhj.kotlin.goods.data.protocol.CartGoods
+import com.xhj.kotlin.goods.event.AddCartEvent
 import com.xhj.kotlin.goods.event.CartAllCheckedEvent
+import com.xhj.kotlin.goods.event.UpdateCartSizeEvent
 import com.xhj.kotlin.goods.event.UpdateTotalPriceEvent
 import com.xhj.kotlin.goods.injection.component.DaggerCartComponent
 import com.xhj.kotlin.goods.injection.module.CartModule
@@ -23,11 +28,13 @@ import com.xhj.kotlin.goods.presenter.CartListPresenter
 import com.xhj.kotlin.goods.presenter.view.CartListView
 import com.xhj.kotlin.goods.ui.adapter.CartGoodsAdapter
 import kotlinx.android.synthetic.main.fragment_cart.*
+import org.jetbrains.anko.support.v4.toast
 
 /**
  * Author: Created by XHJ on 2018/11/29.
  */
 class CartFragment: BaseMvpFragment<CartListPresenter>(), CartListView {
+
 
     private lateinit var mAdapter:CartGoodsAdapter
     private var mTotalPrice:Long = 0
@@ -40,8 +47,12 @@ class CartFragment: BaseMvpFragment<CartListPresenter>(), CartListView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-        loadData()
         initObserve()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        loadData()
     }
 
     /**
@@ -59,6 +70,23 @@ class CartFragment: BaseMvpFragment<CartListPresenter>(), CartListView {
             }
             mAdapter.notifyDataSetChanged()
             updateTotalPrice()
+        }
+
+        //购物车编辑功能点击事件
+        mHeaderBar.getRightView().onClick {
+            refreshEditStatus()
+        }
+
+        mDeleteBtn.onClick {
+            val cartIdList:MutableList<Int> = arrayListOf()
+            mAdapter.dataList.filter { it.isSelected }
+                .mapTo(cartIdList){it.id}
+            if(cartIdList.size == 0){
+                toast("请选择需要删除的商品")
+            }else{
+                mPresenter.deleteCartList(cartIdList)
+            }
+            mPresenter.deleteCartList(cartIdList)
         }
 
     }
@@ -84,6 +112,18 @@ class CartFragment: BaseMvpFragment<CartListPresenter>(), CartListView {
             }.registerInBus(this)
     }
 
+    //购物车编辑切换实现
+    private fun refreshEditStatus() {
+        //是否是可编辑状态
+        val isEditStatus = mHeaderBar.getRightView().text == getString(R.string.common_edit)
+        mSettleAccountsBtn.setVisible(isEditStatus.not())
+        mTotalPriceTv.setVisible(isEditStatus.not())
+        mDeleteBtn.setVisible(isEditStatus)
+        //编辑状态headerbar右上角显示完成，非编辑状态显示编辑
+        mHeaderBar.getRightView().text = if(isEditStatus)
+            getString(R.string.common_complete) else getString(R.string.common_edit)
+    }
+
     override fun injectComponent() {
         DaggerCartComponent.builder()
             .activityComponent(activityComponent)
@@ -102,6 +142,20 @@ class CartFragment: BaseMvpFragment<CartListPresenter>(), CartListView {
         }else{
             mMultiStateView.viewState = MultiStateView.VIEW_STATE_EMPTY
         }
+        //更新存储于SharedPreferences中的购物车商品数量
+        AppPrefsUtils.putInt(GoodsConstant.SP_CART_SIZE, result?.size?:0)
+        //通知主界面也就是MainActivity中进行购物车角标更新
+        Bus.send(UpdateCartSizeEvent())
+        //加载购物车合计价格
+        updateTotalPrice()
+    }
+
+    /**
+    删除购物车商品 回调
+     */
+    override fun onDeleteCartListResult(result: Boolean) {
+        toast("删除成功")
+        loadData()
     }
 
     override fun onDestroy() {
