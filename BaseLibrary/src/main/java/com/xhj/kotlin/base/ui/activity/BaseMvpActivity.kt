@@ -1,6 +1,7 @@
 package com.xhj.kotlin.base.ui.activity
 
 import android.os.Bundle
+import com.alibaba.android.arouter.launcher.ARouter
 import com.orhanobut.logger.Logger
 import com.xhj.kotlin.base.common.BaseApplication
 import com.xhj.kotlin.base.injection.component.ActivityComponent
@@ -24,9 +25,11 @@ open abstract class BaseMvpActivity<T : BasePresenter<*>> : BaseActivity(), Base
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ininActivityComponent()
-        Logger.d("injectComponent() 为什么要在ininActivityComponent()方法下面才可以，不然闪退")
         injectComponent()
+
         mLoadingDialog = ProgressLoading.create(this)
+        //应用ARouter映射变量时需要进行注册
+        ARouter.getInstance().inject(this)
     }
     //用于Activity绑定Component组件
     abstract fun injectComponent()

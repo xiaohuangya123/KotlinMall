@@ -18,7 +18,6 @@ import com.xhj.kotlin.base.utils.YuanFenConverter
 import com.xhj.kotlin.goods.R
 import com.xhj.kotlin.goods.common.GoodsConstant
 import com.xhj.kotlin.goods.data.protocol.CartGoods
-import com.xhj.kotlin.goods.event.AddCartEvent
 import com.xhj.kotlin.goods.event.CartAllCheckedEvent
 import com.xhj.kotlin.goods.event.UpdateCartSizeEvent
 import com.xhj.kotlin.goods.event.UpdateTotalPriceEvent
@@ -176,7 +175,7 @@ class CartFragment: BaseMvpFragment<CartListPresenter>(), CartListView {
     提交购物车商品 回调
      */
     override fun onSubmitCartListResult(result: Int) {
-        toast(result.toString())
+        //ARouter实现不同模块间跳转
         ARouter.getInstance()
             .build(RouterPath.OrderCenter.PATH_ORDER_CONFIRM)
             .withInt(ProviderConstant.KEY_ORDER_ID, result)
