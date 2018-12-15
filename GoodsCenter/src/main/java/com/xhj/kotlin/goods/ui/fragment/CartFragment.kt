@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.eightbitlab.rxbus.Bus
 import com.eightbitlab.rxbus.registerInBus
 import com.kennyc.view.MultiStateView
-import com.orhanobut.logger.Logger
 import com.xhj.kotlin.base.ext.onClick
 import com.xhj.kotlin.base.ext.setVisible
 import com.xhj.kotlin.base.ext.startLoading
@@ -34,7 +33,6 @@ import org.jetbrains.anko.support.v4.toast
  * Author: Created by XHJ on 2018/11/29.
  */
 class CartFragment: BaseMvpFragment<CartListPresenter>(), CartListView {
-
 
     private lateinit var mAdapter:CartGoodsAdapter
     private var mTotalPrice:Long = 0
@@ -76,7 +74,7 @@ class CartFragment: BaseMvpFragment<CartListPresenter>(), CartListView {
         mHeaderBar.getRightView().onClick {
             refreshEditStatus()
         }
-
+        //删除购物车商品点击事件
         mDeleteBtn.onClick {
             val cartIdList:MutableList<Int> = arrayListOf()
             mAdapter.dataList.filter { it.isSelected }
@@ -88,7 +86,17 @@ class CartFragment: BaseMvpFragment<CartListPresenter>(), CartListView {
             }
             mPresenter.deleteCartList(cartIdList)
         }
-
+        //提交购物车商品点击事件（也就是点击去结算按钮）
+        mSettleAccountsBtn.onClick {
+            val cartGoodsList:MutableList<CartGoods> = arrayListOf()
+            mAdapter.dataList.filter { it.isSelected }
+                .mapTo(cartGoodsList){it}
+            if(cartGoodsList.size ==0 ){
+                toast("请选中要结算的商品")
+            }else{
+                mPresenter.submitCart(cartGoodsList, mTotalPrice)
+            }
+        }
     }
 
     /**
@@ -137,9 +145,12 @@ class CartFragment: BaseMvpFragment<CartListPresenter>(), CartListView {
      */
     override fun onGetCartListResult(result: MutableList<CartGoods>?) {
         if(result != null && result.size>0 ){
+            mHeaderBar.getRightView().setVisible(true)
             mAdapter.setData(result)
+            mAllCheckedCb.isChecked = false
             mMultiStateView.viewState = MultiStateView.VIEW_STATE_CONTENT
         }else{
+            mHeaderBar.getRightView().setVisible(false)
             mMultiStateView.viewState = MultiStateView.VIEW_STATE_EMPTY
         }
         //更新存储于SharedPreferences中的购物车商品数量
@@ -155,7 +166,14 @@ class CartFragment: BaseMvpFragment<CartListPresenter>(), CartListView {
      */
     override fun onDeleteCartListResult(result: Boolean) {
         toast("删除成功")
+        refreshEditStatus()
         loadData()
+    }
+    /**
+    提交购物车商品 回调
+     */
+    override fun onSubmitCartListResult(result: Int) {
+        toast(result.toString())
     }
 
     override fun onDestroy() {
@@ -169,5 +187,10 @@ class CartFragment: BaseMvpFragment<CartListPresenter>(), CartListView {
             .map { it.goodsCount * it.goodsPrice }
             .sum()
         mTotalPriceTv.text = "合计：${YuanFenConverter.changeF2Y(mTotalPrice)}"
+    }
+
+    //设置headerbar最左侧返回键是否可见
+    fun setBackVisible(isVisible:Boolean){
+        mHeaderBar.getLeftView().setVisible(isVisible)
     }
 }

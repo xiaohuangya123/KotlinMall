@@ -15,6 +15,7 @@ import com.xhj.kotlin.goods.event.UpdateCartSizeEvent
 import com.xhj.kotlin.goods.ui.adapter.GoodsDetailVpAdapter
 import com.xhj.kotlin.provider.common.afterLogin
 import kotlinx.android.synthetic.main.activity_goods_detail.*
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import q.rorbin.badgeview.QBadgeView
 
@@ -39,10 +40,19 @@ class GoodsDetailActivity: BaseActivity() {
         mGoodsDetailVp.adapter = GoodsDetailVpAdapter(supportFragmentManager, this)
         mGoodsDetailTab.setupWithViewPager(mGoodsDetailVp)
 
+        //加入购物车点击事件
         mAddCartBtn.onClick {
             afterLogin {
                 Bus.send(AddCartEvent())
             }
+        }
+        //购物车点击事件
+        mEnterCartTv.onClick {
+            startActivity<CartActivity>()
+        }
+        //返回按键
+        mLeftIv.onClick {
+            finish()
         }
 
         mCartBadge = QBadgeView(this)

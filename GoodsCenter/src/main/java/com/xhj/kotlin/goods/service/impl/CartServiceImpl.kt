@@ -43,6 +43,13 @@ class CartServiceImpl @Inject constructor() :CartService{
         return repository.deleteCartList(list).convertBoolean()
     }
 
+    /*
+        提交购物车商品
+     */
+    override fun submitCart(list: MutableList<CartGoods>, totalPrice: Long): Observable<Int>{
+        return repository.submitCart(list, totalPrice).convert()
+    }
+
 
 
 }
