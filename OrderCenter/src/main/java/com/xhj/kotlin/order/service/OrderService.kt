@@ -7,4 +7,9 @@ interface OrderService {
          根据ID查询订单
       */
     fun getOrderById(orderId: Int): Observable<Order>
+
+    /*
+        提交订单
+     */
+    fun submitOrder(order: Order): Observable<Boolean>
 }

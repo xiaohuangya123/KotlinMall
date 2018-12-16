@@ -28,5 +28,21 @@ class OrderConfirmPresenter @Inject constructor(): BasePresenter<OrderConfirmVie
                 }
             },lifecycleProvider)
     }
+
+    /*
+        根据ID查询订单
+     */
+    fun submitOrder(order: Order){
+        if(!checkNetWork()){
+            return
+        }
+        mView.showLoading()
+        orderService.submitOrder(order)
+            .execute(object : BaseObserver<Boolean>(mView){
+                override fun onNext(t: Boolean) {
+                    mView.onSubmitOrderResult(t)
+                }
+            },lifecycleProvider)
+    }
 }
 

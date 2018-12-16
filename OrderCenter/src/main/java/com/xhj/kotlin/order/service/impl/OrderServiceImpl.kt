@@ -1,6 +1,7 @@
 package com.xhj.kotlin.order.service.impl
 
 import com.xhj.kotlin.base.ext.convert
+import com.xhj.kotlin.base.ext.convertBoolean
 import com.xhj.kotlin.order.data.protocol.Order
 import com.xhj.kotlin.order.data.repository.OrderRepository
 import com.xhj.kotlin.order.service.OrderService
@@ -17,6 +18,13 @@ class OrderServiceImpl @Inject constructor() : OrderService {
      */
     override fun getOrderById(orderId: Int): Observable<Order> {
         return repository.getOrderById(orderId).convert()
+    }
+
+    /*
+        提交订单
+     */
+    override fun submitOrder(order: Order): Observable<Boolean>{
+        return repository.submitOrder(order).convertBoolean()
     }
 
 }
