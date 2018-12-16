@@ -3,6 +3,7 @@ package com.xhj.kotlin.order.presenter
 import com.xhj.kotlin.base.ext.execute
 import com.xhj.kotlin.base.presenter.BasePresenter
 import com.xhj.kotlin.base.rx.BaseObserver
+import com.xhj.kotlin.order.data.protocol.ShipAddress
 import com.xhj.kotlin.order.presenter.view.EditShipAddressView
 import com.xhj.kotlin.order.service.ShipAddressService
 import javax.inject.Inject
@@ -24,6 +25,22 @@ class EditShipAddressPresenter @Inject constructor(): BasePresenter<EditShipAddr
             .execute(object : BaseObserver<Boolean>(mView){
                 override fun onNext(t: Boolean) {
                     mView.onAddShipAddressResult(t)
+                }
+            },lifecycleProvider)
+    }
+
+    /*
+        修改收货地址
+     */
+    fun editShipAddress(address: ShipAddress){
+        if(!checkNetWork()){
+            return
+        }
+        mView.showLoading()
+        shipAddressService.editShipAddress(address)
+            .execute(object : BaseObserver<Boolean>(mView){
+                override fun onNext(t: Boolean) {
+                    mView.onEditShipAddressResult(t)
                 }
             },lifecycleProvider)
     }

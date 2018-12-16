@@ -10,6 +10,7 @@ import com.xhj.kotlin.base.ext.onClick
 import com.xhj.kotlin.base.ui.fragment.BaseFragment
 import com.xhj.kotlin.mall.R
 import com.xhj.kotlin.mall.ui.activity.SettingActivity
+import com.xhj.kotlin.order.ui.activity.ShipAddressActivity
 import com.xhj.kotlin.provider.common.ProviderConstant
 import com.xhj.kotlin.provider.common.isLogined
 import com.xhj.kotlin.user.ui.activity.LoginActivity
@@ -37,6 +38,7 @@ class MeFragment: BaseFragment(),View.OnClickListener {
     private fun initView() {
         mUserIconIv.onClick(this)
         mUserNameTv.onClick(this)
+        mAddressTv.onClick( this )
         mSettingTv.onClick(this)
     }
 
@@ -67,10 +69,8 @@ class MeFragment: BaseFragment(),View.OnClickListener {
                     startActivity<LoginActivity>()
                 }
             }
-
-            R.id.mSettingTv ->{
-                startActivity<SettingActivity>()
-            }
+            R.id.mAddressTv ->{ startActivity<ShipAddressActivity>() }
+            R.id.mSettingTv ->{ startActivity<SettingActivity>()}
         }
     }
 

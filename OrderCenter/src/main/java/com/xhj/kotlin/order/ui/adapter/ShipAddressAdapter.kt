@@ -37,9 +37,10 @@ class ShipAddressAdapter(context: Context) : BaseRecyclerViewAdapter<ShipAddress
 
         holder.itemView.mSetDefaultTv.onClick {
             mOptClickListener?.let {
-                if (holder.itemView.mSetDefaultTv.isSelected){
+                if(holder.itemView.mSetDefaultTv.isSelected){
                     return@onClick
                 }
+                //0表示默认收货地址
                 model.shipIsDefault = 0
                 it.onSetDefault(model)
             }
@@ -50,6 +51,7 @@ class ShipAddressAdapter(context: Context) : BaseRecyclerViewAdapter<ShipAddress
                 it.onEdit(model)
             }
         }
+
         holder.itemView.mDeleteTv.onClick {
             mOptClickListener?.let {
                 it.onDelete(model)
@@ -65,8 +67,8 @@ class ShipAddressAdapter(context: Context) : BaseRecyclerViewAdapter<ShipAddress
         对应操作接口
      */
     interface OnOptClickListener{
-        fun onSetDefault(address:ShipAddress)
-        fun onEdit(address:ShipAddress)
-        fun onDelete(address:ShipAddress)
+        fun onSetDefault(address: ShipAddress)
+        fun onEdit(address: ShipAddress)
+        fun onDelete(address: ShipAddress)
     }
 }

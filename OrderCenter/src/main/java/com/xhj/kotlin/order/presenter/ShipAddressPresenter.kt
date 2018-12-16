@@ -28,5 +28,37 @@ class ShipAddressPresenter @Inject constructor(): BasePresenter<ShipAddressView>
                 }
             },lifecycleProvider)
     }
+
+    /*
+        设置默认收货地址
+     */
+    fun setDefaultShipAddress(address:ShipAddress){
+        if(!checkNetWork()){
+            return
+        }
+        mView.showLoading()
+        shipAddressService.editShipAddress(address)
+            .execute(object : BaseObserver<Boolean>(mView){
+                override fun onNext(t: Boolean) {
+                    mView.onEditShipAddressResult(t)
+                }
+            },lifecycleProvider)
+    }
+
+    /*
+        删除收货地址
+     */
+    fun deleteShipAddress(id: Int){
+        if(!checkNetWork()){
+            return
+        }
+        mView.showLoading()
+        shipAddressService.deleteShipAddress(id)
+            .execute(object : BaseObserver<Boolean>(mView){
+                override fun onNext(t: Boolean) {
+                    mView.onDeleteShipAddressResult(t)
+                }
+            },lifecycleProvider)
+    }
 }
 
