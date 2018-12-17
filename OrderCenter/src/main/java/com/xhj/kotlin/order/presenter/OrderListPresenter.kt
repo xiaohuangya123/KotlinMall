@@ -29,5 +29,37 @@ class OrderListPresenter @Inject constructor(): BasePresenter<OrderListView>(){
             },lifecycleProvider)
     }
 
+    /*
+         确认收获订单
+     */
+    fun confirmOrder(orderId: Int){
+        if(!checkNetWork()){
+            return
+        }
+        mView.showLoading()
+        orderService.confirmOrder(orderId)
+            .execute(object : BaseObserver<Boolean>(mView){
+                override fun onNext(t: Boolean) {
+                    mView.onConfirmOrderResult(t)
+                }
+            },lifecycleProvider)
+    }
+
+    /*
+         取消订单
+     */
+    fun cancelOrder(orderId: Int){
+        if(!checkNetWork()){
+            return
+        }
+        mView.showLoading()
+        orderService.cancelOrder(orderId)
+            .execute(object : BaseObserver<Boolean>(mView){
+                override fun onNext(t: Boolean) {
+                    mView.oncCancelOrderResult(t)
+                }
+            },lifecycleProvider)
+    }
+
 }
 

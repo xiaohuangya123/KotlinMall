@@ -25,7 +25,7 @@ class OrderRepository @Inject constructor() {
     }
 
     /*
-        确认订单
+        确认收货订单
      */
     fun confirmOrder(orderId: Int): Observable<BaseResp<String>> {
         return RetrofitFactory.instance.create(OrderApi::class.java).confirmOrder(ConfirmOrderReq(orderId))

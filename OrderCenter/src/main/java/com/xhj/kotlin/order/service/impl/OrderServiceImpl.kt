@@ -35,4 +35,18 @@ class OrderServiceImpl @Inject constructor() : OrderService {
         return repository.getOrderList(orderStatus).convert()
     }
 
+    /*
+        取消订单
+     */
+    override fun cancelOrder(orderId: Int): Observable<Boolean>{
+        return repository.cancelOrder(orderId).convertBoolean()
+    }
+
+    /*
+        确认收货订单
+     */
+    override fun confirmOrder(orderId: Int): Observable<Boolean>{
+        return repository.confirmOrder(orderId).convertBoolean()
+    }
+
 }

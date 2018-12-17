@@ -17,4 +17,14 @@ interface OrderService {
        根据状态查询订单列表
     */
     fun getOrderList(orderStatus: Int): Observable<MutableList<Order>?>
+
+    /*
+        取消订单
+     */
+    fun cancelOrder(orderId: Int): Observable<Boolean>
+
+    /*
+        确认收货订单
+     */
+    fun confirmOrder(orderId: Int): Observable<Boolean>
 }

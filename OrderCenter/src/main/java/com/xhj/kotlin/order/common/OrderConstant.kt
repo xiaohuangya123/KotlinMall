@@ -17,7 +17,7 @@ class OrderConstant {
         const val KEY_ADDRESS_IS_EDIT = "address_is_edit"
         //支付订单操作
         const val OPT_ORDER_PAY = 1
-        //确认订单操作
+        //确认收获操作
         const val OPT_ORDER_CONFIRM = 2
         //取消订单操作
         const val OPT_ORDER_CANCEL = 3
