@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              style="@style/MatchMatch.Vertical.Common">
+
+    <com.kennyc.view.MultiStateView
+        android:id="@+id/mMultiStateView"
+        style="@style/MultiStateStyle"
+        android:layout_below="@id/mHeaderBar">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mOrderRv"
+            style="@style/commonRecyclerView"
+            android:layout_above="@+id/mBottomView"/>
+
+    </com.kennyc.view.MultiStateView>
+</LinearLayout>

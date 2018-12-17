@@ -10,6 +10,7 @@ import javax.inject.Inject
 
 class OrderServiceImpl @Inject constructor() : OrderService {
 
+
     @Inject
     lateinit var repository : OrderRepository
 
@@ -25,6 +26,13 @@ class OrderServiceImpl @Inject constructor() : OrderService {
      */
     override fun submitOrder(order: Order): Observable<Boolean>{
         return repository.submitOrder(order).convertBoolean()
+    }
+
+    /*
+        根据状态查询订单列表
+     */
+    override fun getOrderList(orderStatus: Int): Observable<MutableList<Order>?> {
+        return repository.getOrderList(orderStatus).convert()
     }
 
 }

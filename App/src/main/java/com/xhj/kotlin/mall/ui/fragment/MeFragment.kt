@@ -10,8 +10,12 @@ import com.xhj.kotlin.base.ext.onClick
 import com.xhj.kotlin.base.ui.fragment.BaseFragment
 import com.xhj.kotlin.mall.R
 import com.xhj.kotlin.mall.ui.activity.SettingActivity
+import com.xhj.kotlin.order.common.OrderConstant
+import com.xhj.kotlin.order.common.OrderStatus
+import com.xhj.kotlin.order.ui.activity.OrderActivity
 import com.xhj.kotlin.order.ui.activity.ShipAddressActivity
 import com.xhj.kotlin.provider.common.ProviderConstant
+import com.xhj.kotlin.provider.common.afterLogin
 import com.xhj.kotlin.provider.common.isLogined
 import com.xhj.kotlin.user.ui.activity.LoginActivity
 import com.xhj.kotlin.user.ui.activity.UserInfoActivity
@@ -40,6 +44,11 @@ class MeFragment: BaseFragment(),View.OnClickListener {
         mUserNameTv.onClick(this)
         mAddressTv.onClick( this )
         mSettingTv.onClick(this)
+
+        mWaitPayOrderTv.onClick(this)
+        mWaitConfirmOrderTv.onClick(this)
+        mCompleteOrderTv.onClick(this)
+        mAllOrderTv.onClick(this)
     }
 
     override fun onStart() {
@@ -63,14 +72,36 @@ class MeFragment: BaseFragment(),View.OnClickListener {
     override fun onClick(v: View) {
         when(v.id){
             R.id.mUserIconIv, R.id.mUserNameTv ->{
-                if(isLogined()){
+                afterLogin {
                     startActivity<UserInfoActivity>()
-                }else{
-                    startActivity<LoginActivity>()
                 }
             }
             R.id.mAddressTv ->{ startActivity<ShipAddressActivity>() }
             R.id.mSettingTv ->{ startActivity<SettingActivity>()}
+
+            R.id.mWaitPayOrderTv ->{
+                afterLogin {
+                    startActivity<OrderActivity>(OrderConstant.KEY_ORDER_STATUS to
+                        OrderStatus.ORDER_WAIT_PAY)
+                }
+            }
+            R.id.mWaitConfirmOrderTv ->{
+                afterLogin {
+                    startActivity<OrderActivity>(OrderConstant.KEY_ORDER_STATUS to
+                            OrderStatus.ORDER_WAIT_CONFIRM)
+                }
+            }
+            R.id.mCompleteOrderTv ->{
+                afterLogin {
+                    startActivity<OrderActivity>(OrderConstant.KEY_ORDER_STATUS to
+                            OrderStatus.ORDER_COMPLETED)
+                }
+            }
+            R.id.mAllOrderTv ->{
+                afterLogin {
+                    startActivity<OrderActivity>() //没有加参数，默认就是全部订单
+                }
+            }
         }
     }
 

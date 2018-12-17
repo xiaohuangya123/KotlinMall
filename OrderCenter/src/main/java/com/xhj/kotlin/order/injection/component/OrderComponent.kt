@@ -4,6 +4,7 @@ import com.xhj.kotlin.base.injection.PerComponentScope
 import com.xhj.kotlin.base.injection.component.ActivityComponent
 import com.xhj.kotlin.order.injection.module.OrderModule
 import com.xhj.kotlin.order.ui.activity.OrderConfirmActivity
+import com.xhj.kotlin.order.ui.fragment.OrderFragment
 import dagger.Component
 
 /**
@@ -14,4 +15,5 @@ import dagger.Component
     ,modules = arrayOf(OrderModule::class))
 interface OrderComponent {
     fun inject(activity: OrderConfirmActivity)
+    fun inject(fragment: OrderFragment)
 }

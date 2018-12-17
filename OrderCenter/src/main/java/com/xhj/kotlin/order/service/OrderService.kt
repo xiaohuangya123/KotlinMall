@@ -12,4 +12,9 @@ interface OrderService {
         提交订单
      */
     fun submitOrder(order: Order): Observable<Boolean>
+
+    /*
+       根据状态查询订单列表
+    */
+    fun getOrderList(orderStatus: Int): Observable<MutableList<Order>?>
 }
