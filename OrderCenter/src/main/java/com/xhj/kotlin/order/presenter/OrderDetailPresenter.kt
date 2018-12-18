@@ -4,11 +4,11 @@ import com.xhj.kotlin.base.ext.execute
 import com.xhj.kotlin.base.presenter.BasePresenter
 import com.xhj.kotlin.base.rx.BaseObserver
 import com.xhj.kotlin.order.data.protocol.Order
-import com.xhj.kotlin.order.presenter.view.OrderConfirmView
+import com.xhj.kotlin.order.presenter.view.OrderDetailView
 import com.xhj.kotlin.order.service.OrderService
 import javax.inject.Inject
 
-class OrderConfirmPresenter @Inject constructor(): BasePresenter<OrderConfirmView>(){
+class OrderDetailPresenter @Inject constructor(): BasePresenter<OrderDetailView>(){
 
     @Inject
     lateinit var orderService : OrderService
@@ -25,22 +25,6 @@ class OrderConfirmPresenter @Inject constructor(): BasePresenter<OrderConfirmVie
             .execute(object : BaseObserver<Order>(mView){
                 override fun onNext(t: Order) {
                     mView.onGetOrderByIdResult(t)
-                }
-            },lifecycleProvider)
-    }
-
-    /*
-        提交订单
-     */
-    fun submitOrder(order: Order){
-        if(!checkNetWork()){
-            return
-        }
-        mView.showLoading()
-        orderService.submitOrder(order)
-            .execute(object : BaseObserver<Boolean>(mView){
-                override fun onNext(t: Boolean) {
-                    mView.onSubmitOrderResult(t)
                 }
             },lifecycleProvider)
     }

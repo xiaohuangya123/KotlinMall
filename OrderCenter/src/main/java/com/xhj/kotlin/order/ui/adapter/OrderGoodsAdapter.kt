@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.layout_order_goods_item.view.*
  */
 class OrderGoodsAdapter(context: Context) : BaseRecyclerViewAdapter<OrderGoods, OrderGoodsAdapter.ViewHolder>(context) {
 
-
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): ViewHolder {
         val view = LayoutInflater.from(mContext)

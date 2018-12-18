@@ -89,7 +89,7 @@ class OrderConfirmActivity:BaseMvpActivity<OrderConfirmPresenter>(), OrderConfir
     }
 
     /**
-     * 更具ID查询订单回调
+     * 根据ID查询订单回调
      */
     override fun onGetOrderByIdResult(result: Order) {
         //存储order信息，获取地址相关信息在updateAddressView()方法中使用

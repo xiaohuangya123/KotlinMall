@@ -12,8 +12,6 @@ import com.xhj.kotlin.base.ext.setVisible
 import com.xhj.kotlin.base.ui.adapter.BaseRecyclerViewAdapter
 import com.xhj.kotlin.base.utils.YuanFenConverter
 import com.xhj.kotlin.order.R
-import com.xhj.kotlin.order.R.id.mMultiGoodsView
-import com.xhj.kotlin.order.R.id.view_offset_helper
 import com.xhj.kotlin.order.common.OrderConstant
 import com.xhj.kotlin.order.common.OrderStatus
 import com.xhj.kotlin.order.data.protocol.Order
@@ -132,6 +130,4 @@ class OrderAdapter(context: Context) : BaseRecyclerViewAdapter<Order, OrderAdapt
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
-
-
 }

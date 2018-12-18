@@ -10,6 +10,7 @@ import com.bigkoo.alertview.AlertView
 import com.bigkoo.alertview.OnItemClickListener
 import com.kennyc.view.MultiStateView
 import com.xhj.kotlin.base.ext.startLoading
+import com.xhj.kotlin.base.ui.adapter.BaseRecyclerViewAdapter
 import com.xhj.kotlin.base.ui.fragment.BaseMvpFragment
 import com.xhj.kotlin.order.R
 import com.xhj.kotlin.order.common.OrderConstant
@@ -18,8 +19,11 @@ import com.xhj.kotlin.order.injection.component.DaggerOrderComponent
 import com.xhj.kotlin.order.injection.module.OrderModule
 import com.xhj.kotlin.order.presenter.OrderListPresenter
 import com.xhj.kotlin.order.presenter.view.OrderListView
+import com.xhj.kotlin.order.ui.activity.OrderDetailActivity
 import com.xhj.kotlin.order.ui.adapter.OrderAdapter
+import com.xhj.kotlin.provider.common.ProviderConstant
 import kotlinx.android.synthetic.main.fragment_order.*
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 
 /**
@@ -63,6 +67,13 @@ class OrderFragment:BaseMvpFragment<OrderListPresenter>(), OrderListView {
                 }
             }
         }
+
+        mAdapter.setOnItemClickListener(object : BaseRecyclerViewAdapter.OnItemClickListener<Order>{
+            override fun onItemClick(item: Order, position: Int) {
+                startActivity<OrderDetailActivity>(ProviderConstant.KEY_ORDER_ID to item.id)
+            }
+
+        })
     }
     //弹出dialog 确认是否取消订单
     private fun showCancelDialog(orderId: Int) {
