@@ -3,13 +3,13 @@ package com.xhj.kotlin.base.common
 import android.app.Application
 import android.content.Context
 import com.alibaba.android.arouter.launcher.ARouter
-import com.eightbitlab.rxbus.Bus
 import com.orhanobut.logger.*
 import com.xhj.kotlin.base.injection.component.AppComponent
 import com.xhj.kotlin.base.injection.component.DaggerAppComponent
 import com.xhj.kotlin.base.injection.module.AppModule
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.PrettyFormatStrategy
+import com.squareup.leakcanary.LeakCanary
 
 /**
  * Author: Created by XHJBB on 2018/11/11.
@@ -18,12 +18,22 @@ class BaseApplication : Application() {
 
     lateinit var appComponent: AppComponent
 
+    /*
+        全局伴生对象
+     */
     companion object {
         lateinit var context : Context
     }
 
     override fun onCreate() {
         super.onCreate()
+        //LeakCanary内存泄漏检查工具初始化
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
        //应用logger日志框架
         val formatStrategy = PrettyFormatStrategy.newBuilder()
             .tag("myTag")
