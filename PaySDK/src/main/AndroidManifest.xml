@@ -15,5 +15,6 @@
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
+        <activity android:name=".ui.activity.CashRegisterActivity" />
     </application>
 </manifest>

@@ -1,10 +1,10 @@
 package com.xhj.kotlin.pay.data.api
 
 import retrofit2.http.Body
-import rx.Observable
 import com.xhj.kotlin.base.data.protocol.BaseResp
 import com.xhj.kotlin.pay.data.protocol.GetPaySignReq
 import com.xhj.kotlin.pay.data.protocol.PayOrderReq
+import io.reactivex.Observable
 import retrofit2.http.POST
 
 

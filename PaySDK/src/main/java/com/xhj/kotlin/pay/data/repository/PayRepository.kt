@@ -3,12 +3,12 @@ package com.xhj.kotlin.pay.data.repository
 
 import javax.inject.Inject
 
-import rx.Observable
 import com.xhj.kotlin.base.data.net.RetrofitFactory
 import com.xhj.kotlin.base.data.protocol.BaseResp
 import com.xhj.kotlin.pay.data.protocol.GetPaySignReq
 import com.xhj.kotlin.pay.data.protocol.PayOrderReq
 import com.xhj.kotlin.pay.data.api.PayApi
+import io.reactivex.Observable
 
 
 /*
