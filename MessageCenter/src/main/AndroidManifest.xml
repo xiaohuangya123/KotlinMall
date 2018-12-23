@@ -2,6 +2,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.xhj.kotlin.message">
     <application>
+
+        <receiver
+            android:name=".receiver.MessageReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <!--Required 用户注册 SDK 的 intent-->
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <!--Required 用户接收 SDK 消息的 intent-->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+                <!--Required 用户接收 SDK 通知栏信息的 intent-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+                <!--Required 用户打开自定义通知栏的 intent-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+                <!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" />
+                <category android:name="com.xhj.kotlin.mall" />
+            </intent-filter>
+        </receiver>
+
         <meta-data android:name="JPUSH_APPKEY" android:value="${JPUSH_APPKEY}" tools:replace="android:value"/>
         <meta-data android:name="JPUSH_CHANNEL" android:value="${JPUSH_CHANNEL}" tools:replace="android:value"/>
     </application>
