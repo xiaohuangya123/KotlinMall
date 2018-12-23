@@ -14,7 +14,7 @@ import com.squareup.leakcanary.LeakCanary
 /**
  * Author: Created by XHJBB on 2018/11/11.
  */
-class BaseApplication : Application() {
+open class BaseApplication : Application() {
 
     lateinit var appComponent: AppComponent
 

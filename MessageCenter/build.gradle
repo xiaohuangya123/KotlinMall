@@ -13,6 +13,20 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        //极光推送 开始
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : "com.xhj.kotlin.mall",
+                JPUSH_APPKEY : "b563359d7b4f7a671c2b4a7b", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
+        //极光推送 结束
+
     }
 
     buildTypes {
@@ -33,6 +47,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 
     api project(':Provider')
+
+    //极光推送
+    api 'cn.jiguang.sdk:jpush:3.1.6'
+    api 'cn.jiguang.sdk:jcore:1.2.5'
 
 
 }

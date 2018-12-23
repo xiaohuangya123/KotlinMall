@@ -23,7 +23,6 @@ import com.xhj.kotlin.provider.common.ProviderConstant
 import com.xhj.kotlin.provider.router.RouterPath
 import kotlinx.android.synthetic.main.activity_order_confirm.*
 import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
 
 /**
  * Author: Created by XHJ on 2018/12/15.
