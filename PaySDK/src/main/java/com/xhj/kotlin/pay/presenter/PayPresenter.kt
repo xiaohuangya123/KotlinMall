@@ -27,4 +27,17 @@ class PayPresenter @Inject constructor(): BasePresenter<PayView>() {
                 }
             },lifecycleProvider)
     }
+
+    fun payOrder(orderId: Int){
+        if(!checkNetWork()){
+            return
+        }
+        mView.showLoading()
+        payService.payOrder(orderId)
+            .execute(object : BaseObserver<Boolean>(mView){
+                override fun onNext(t: Boolean) {
+                    mView.onPayOrderResult(t)
+                }
+            },lifecycleProvider)
+    }
 }

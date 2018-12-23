@@ -7,4 +7,5 @@ import com.xhj.kotlin.base.presenter.view.BaseView
  */
 interface PayView:BaseView {
     fun onGetPaySignResult(result: String)
+    fun onPayOrderResult(result: Boolean)
 }
