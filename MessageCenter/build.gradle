@@ -1,6 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+//ARouter配置
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
 
 android {
     compileSdkVersion 28
@@ -51,6 +58,11 @@ dependencies {
     //极光推送
     api 'cn.jiguang.sdk:jpush:3.1.6'
     api 'cn.jiguang.sdk:jcore:1.2.5'
+
+    //dagger2
+    kapt "com.google.dagger:dagger-compiler:$dagger2_version"
+    //ARouter
+    kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
 
 
 }

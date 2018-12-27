@@ -10,6 +10,10 @@ import androidx.core.content.ContextCompat.getSystemService
 import android.app.NotificationManager
 import android.util.Log
 import android.widget.Toast
+import com.alibaba.android.arouter.launcher.ARouter
+import com.xhj.kotlin.provider.common.ProviderConstant
+import com.xhj.kotlin.provider.router.RouterPath
+import org.json.JSONObject
 
 
 /**
@@ -35,6 +39,13 @@ class MessageReceiver:BroadcastReceiver() {
             Log.d(TAG, "接受到推送下来的通知")
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED == intent.action) {
             Log.d(TAG, "用户点击打开了通知")
+            val extra = bundle.getString(JPushInterface.EXTRA_EXTRA)
+            val json = JSONObject(extra)
+            val orderId = json.getInt("orderId")
+            ARouter.getInstance()
+                .build(RouterPath.MessageCenter.PATH_MESSAGE_ORDER)
+                .withInt(ProviderConstant.KEY_ORDER_ID, orderId)
+                .navigation()
         } else {
             Log.d(TAG, "Unhandled intent - " + intent.action)
         }

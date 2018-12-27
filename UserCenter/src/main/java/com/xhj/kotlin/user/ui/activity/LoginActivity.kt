@@ -2,10 +2,12 @@ package com.xhj.kotlin.user.ui.activity
 
 import android.os.Bundle
 import android.view.View
+import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.xhj.kotlin.base.ext.enable
 import com.xhj.kotlin.base.ext.onClick
 import com.xhj.kotlin.base.ui.activity.BaseMvpActivity
+import com.xhj.kotlin.provider.PushProvider
 import com.xhj.kotlin.provider.router.RouterPath
 import com.xhj.kotlin.user.R
 import com.xhj.kotlin.user.data.protocol.UserInfo
@@ -23,6 +25,10 @@ import org.jetbrains.anko.toast
  */
 @Route(path = RouterPath.UserCenter.PATH_LOGIN)
 class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginView ,View.OnClickListener{
+
+    @Autowired(name=RouterPath.MessageCenter.PATH_MESSAGE_PUSH)
+    @JvmField
+    var mPushProvider:PushProvider? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +64,9 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginView ,View.OnClick
                 startActivity<RegisterActivity>()
             }
             R.id.mLoginBtn ->{
-                mPresenter.login(mMobileEt.text.toString(),mPwdEt.text.toString(),"")
+                mPresenter.login(mMobileEt.text.toString(),
+                    mPwdEt.text.toString(),
+                    mPushProvider?.getPushId()?:"")
             }
             R.id.mForgetPwdTv ->{
                 startActivity<ForgetPwdActivity>()
