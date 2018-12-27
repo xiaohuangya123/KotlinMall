@@ -76,7 +76,11 @@ class MeFragment: BaseFragment(),View.OnClickListener {
                     startActivity<UserInfoActivity>()
                 }
             }
-            R.id.mAddressTv ->{ startActivity<ShipAddressActivity>() }
+            R.id.mAddressTv ->{
+                afterLogin {
+                    startActivity<ShipAddressActivity>()
+                }
+            }
             R.id.mSettingTv ->{ startActivity<SettingActivity>()}
 
             R.id.mWaitPayOrderTv ->{

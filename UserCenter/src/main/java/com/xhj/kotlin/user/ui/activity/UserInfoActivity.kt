@@ -3,22 +3,12 @@ package com.xhj.kotlin.user.ui.activity
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.util.Log
-import com.bigkoo.alertview.AlertView
-import com.bigkoo.alertview.OnItemClickListener
-import com.jph.takephoto.app.TakePhoto
-import com.jph.takephoto.app.TakePhotoImpl
-import com.jph.takephoto.compress.CompressConfig
-import com.jph.takephoto.model.TResult
 import com.xhj.kotlin.base.utils.AppPrefsUtils
 import com.qiniu.android.storage.UploadManager
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.xhj.kotlin.base.ext.onClick
-import com.xhj.kotlin.base.ui.activity.BaseMvpActivity
-import com.xhj.kotlin.base.utils.DateUtils
+import com.xhj.kotlin.base.ui.activity.BaseTakePhotoActivity
 import com.xhj.kotlin.base.utils.GlideUtils
 import com.xhj.kotlin.provider.common.ProviderConstant
 import com.xhj.kotlin.user.R
@@ -30,17 +20,12 @@ import com.xhj.kotlin.user.presenter.view.UserInfoView
 import com.xhj.kotlin.user.utils.UserPrefsUtils
 import kotlinx.android.synthetic.main.activity_user_info.*
 import org.jetbrains.anko.toast
-import java.io.File
 
 /**
  * 用户界面
  */
-class UserInfoActivity : BaseMvpActivity<UserInfoPresenter>(), UserInfoView
-        , TakePhoto.TakeResultListener {
+class UserInfoActivity : BaseTakePhotoActivity<UserInfoPresenter>(), UserInfoView {
 
-
-    lateinit var mTakePhoto: TakePhoto
-    lateinit var mTempFile: File
     private val mUploadManager: UploadManager by lazy { UploadManager() }
     private var mLocalFileUrl: String? = null
     private var mRemoteFileUrl: String? = null
@@ -56,9 +41,6 @@ class UserInfoActivity : BaseMvpActivity<UserInfoPresenter>(), UserInfoView
         setContentView(R.layout.activity_user_info)
         //申请相机，相册权限
         requestPermissions()
-
-        mTakePhoto = TakePhotoImpl(this,this)
-        mTakePhoto.onCreate(savedInstanceState)
 
         initView()
         initData()
@@ -118,52 +100,16 @@ class UserInfoActivity : BaseMvpActivity<UserInfoPresenter>(), UserInfoView
         mPresenter.mView = this
     }
 
-    //弹窗选择头像
-    private fun showAlertView(){
-        AlertView("选择图片", null, "取消", null,
-            arrayOf("拍照", "相册"), this
-            , AlertView.Style.ActionSheet, object: OnItemClickListener{
-                override fun onItemClick(o: Any?, position: Int) {
-                    mTakePhoto.onEnableCompress(CompressConfig.ofDefaultConfig(),false)
-                    when(position){
-                        0 -> {
-                            createTempFile()
-                            mTakePhoto.onPickFromCapture(Uri.fromFile(mTempFile))
-                        }
-                        1 -> mTakePhoto.onPickFromGallery()
-                    }
-                }
-            }).show()
-    }
 
-    override fun takeSuccess(result: TResult?) {
-        Log.d("takePhoto", result?.image?.originalPath)
-        Log.d("takePhoto", result?.image?.compressPath)
-        mLocalFileUrl = result?.image?.compressPath
-        //获取图片成功之后拿上传的凭证
-        mPresenter.getUploadToken()
-    }
 
-    override fun takeCancel() {
-    }
 
-    override fun takeFail(result: TResult?, msg: String?) {
-        Log.e("takePhoto", msg)
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         mTakePhoto.onActivityResult(requestCode,resultCode, data)
     }
 
-    fun createTempFile(){
-         val tempFileName = "${DateUtils.curTime}.png"
-        if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
-            this.mTempFile = File(Environment.getExternalStorageDirectory(), tempFileName)
-            return
-        }
-        this.mTempFile = File(filesDir, tempFileName)
-    }
+
 
 //    @SuppressLint("CheckResult")
     @SuppressLint("CheckResult")

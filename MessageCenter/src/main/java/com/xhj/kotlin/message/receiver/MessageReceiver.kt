@@ -11,7 +11,9 @@ import android.app.NotificationManager
 import android.util.Log
 import android.widget.Toast
 import com.alibaba.android.arouter.launcher.ARouter
+import com.eightbitlab.rxbus.Bus
 import com.xhj.kotlin.provider.common.ProviderConstant
+import com.xhj.kotlin.provider.event.MessageBadgeEvent
 import com.xhj.kotlin.provider.router.RouterPath
 import org.json.JSONObject
 
@@ -34,6 +36,7 @@ class MessageReceiver:BroadcastReceiver() {
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED == intent.action) {
             Log.d(TAG, "接受到推送下来的自定义消息")
             Toast.makeText(context, bundle.getString(JPushInterface.EXTRA_MESSAGE), Toast.LENGTH_LONG).show()
+            Bus.send(MessageBadgeEvent(true))
 
         } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED == intent.action) {
             Log.d(TAG, "接受到推送下来的通知")

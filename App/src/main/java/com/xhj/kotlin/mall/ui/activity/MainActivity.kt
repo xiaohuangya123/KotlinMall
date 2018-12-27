@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.eightbitlab.rxbus.Bus
 import com.eightbitlab.rxbus.registerInBus
+import com.xhj.kotlin.base.common.AppManager
 import com.xhj.kotlin.base.utils.AppPrefsUtils
 import com.xhj.kotlin.goods.common.GoodsConstant
 import com.xhj.kotlin.goods.event.UpdateCartSizeEvent
@@ -15,11 +16,15 @@ import com.xhj.kotlin.mall.R
 import com.xhj.kotlin.mall.ui.fragment.HomeFragment
 import com.xhj.kotlin.mall.ui.fragment.MeFragment
 import com.xhj.kotlin.message.ui.fragment.MessageFragment
+import com.xhj.kotlin.provider.event.MessageBadgeEvent
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.toast
 import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
+
+    private var pressTime : Long = 0
 
     private val mStack = Stack<Fragment>()
     private val mHomeFragment by lazy { HomeFragment() }
@@ -68,6 +73,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+        mBottomNavBar.checkMsgBadge(false)
     }
 
     private fun changeFragment(position: Int) {
@@ -84,6 +90,11 @@ class MainActivity : AppCompatActivity() {
             .subscribe{
                 mBottomNavBar.checkCartBadge(AppPrefsUtils.getInt(GoodsConstant.SP_CART_SIZE))
             }.registerInBus(this)
+
+        Bus.observe<MessageBadgeEvent>()
+            .subscribe{
+                mBottomNavBar.checkMsgBadge(it.isVisible)
+            }.registerInBus(this)
     }
 
     private fun loadCartSize(){
@@ -93,5 +104,15 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Bus.unregister(this)
+    }
+
+    override fun onBackPressed() {
+        var time = System.currentTimeMillis()
+        if(time - pressTime > 2000){
+            toast("在按一次退出应用程序")
+            pressTime = time
+        }else{
+            AppManager.instance.exitApp(this)
+        }
     }
 }
